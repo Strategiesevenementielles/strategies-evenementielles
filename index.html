@@ -1706,7 +1706,7 @@ function scrollTo(id) {
 }
 
 /* ---- ACTIVE SECTION TRACKING ---- */
-const sections = ['marketing','communication','evenementiel','influence','lexique','medias'];
+const sections = ['marketing','communication','evenementiel','influence','lexique','medias','librairie','quiz'];
 
 function updateActive() {
   let current = '';
@@ -1899,18 +1899,6 @@ function restartQuiz() {
 
 buildQuiz();
 
-/* ---- SECTIONS array update ---- */
-// Already defined above as const sections — override
-(function(){
-  const allSecs = ['marketing','communication','evenementiel','influence','lexique','medias','librairie','quiz'];
-  window.addEventListener('scroll', () => {
-    let cur=''; const off=120;
-    allSecs.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(window.scrollY+off>=el.offsetTop)cur=id;});
-    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.section===cur));
-    document.querySelectorAll('.progress-segment').forEach(s=>s.classList.toggle('active',s.dataset.seg===cur));
-    document.querySelectorAll('.pill-dot').forEach(d=>d.classList.toggle('active',d.dataset.pill===cur));
-  },{passive:true});
-})();
 
 </script>
 </body>
