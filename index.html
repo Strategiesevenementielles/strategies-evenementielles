@@ -3,1903 +3,452 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stratégies Événementielles & Marketing</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    /* Palette de base */
-    --noir:        #050e0b;
-    --blanc:       #f4f1ec;
-    --gris-clair:  #E0E0E0;
 
-    /* Couleurs identitaires de chaque module */
-    --c01: #16302B;   /* Vert forêt    — Module 01 Marketing */
-    --c01-acc: #2a5448;
-    --c01-light: rgba(22,48,43,0.18);
-
-    --c02: #390517;   /* Bordeaux      — Module 02 Communication */
-    --c02-acc: #7a1530;
-    --c02-light: rgba(57,5,23,0.18);
-
-    --c03: #03110D;   /* Vert nuit     — Module 03 Événementiel */
-    --c03-acc: #0e2a20;
-    --c03-light: rgba(3,17,13,0.35);
-
-    --c04: #2c1a06;   /* Brun taupe    — Module 04 Influence */
-    --c04-acc: #5a3a10;
-    --c04-light: rgba(44,26,6,0.22);
-
-    --taupe:       #A38560;
-    --taupe-pale:  #c9a97a;
-    --taupe-dim:   rgba(163,133,96,0.18);
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--noir);
-    color: var(--blanc);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* ============================================================
-     NAVIGATION — barre fixe avec indicateur de section actif
-  ============================================================ */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    display: flex;
-    align-items: stretch;
-    background: rgba(5,14,11,0.97);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(163,133,96,0.14);
-    height: 60px;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    padding: 0 2.5rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.18em;
-    color: var(--taupe);
-    text-transform: uppercase;
-    border-right: 1px solid rgba(163,133,96,0.12);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .nav-links {
-    display: flex;
-    list-style: none;
-    flex: 1;
-  }
-
-  /* Chaque lien porte la couleur de son module */
-  .nav-links li { display: flex; }
-
-  .nav-links a {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0 1.5rem;
-    color: rgba(224,224,224,0.45);
-    text-decoration: none;
-    font-size: 0.67rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 400;
-    border-bottom: 3px solid transparent;
-    transition: color 0.3s, border-color 0.3s, background 0.3s;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  /* Pastille couleur avant chaque item */
-  .nav-links a .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    opacity: 0.6;
-    transition: opacity 0.3s, transform 0.3s;
-  }
-
-  .nav-links a:hover { color: var(--gris-clair); background: rgba(163,133,96,0.04); }
-
-  /* États actifs — couleur du module */
-  .nav-links a[data-section="marketing"].active     { color: #4d9e87; border-bottom-color: var(--c01-acc); }
-  .nav-links a[data-section="marketing"] .dot       { background: var(--c01-acc); }
-  .nav-links a[data-section="marketing"].active .dot { opacity: 1; transform: scale(1.3); }
-
-  .nav-links a[data-section="communication"].active  { color: #c0566e; border-bottom-color: var(--c02-acc); }
-  .nav-links a[data-section="communication"] .dot    { background: var(--c02-acc); }
-  .nav-links a[data-section="communication"].active .dot { opacity: 1; transform: scale(1.3); }
-
-  .nav-links a[data-section="evenementiel"].active   { color: #4d9e87; border-bottom-color: #1a5c42; }
-  .nav-links a[data-section="evenementiel"] .dot     { background: #1a5c42; }
-  .nav-links a[data-section="evenementiel"].active .dot { opacity: 1; transform: scale(1.3); }
-
-  .nav-links a[data-section="influence"].active      { color: #c9a97a; border-bottom-color: var(--c04-acc); }
-  .nav-links a[data-section="influence"] .dot        { background: var(--c04-acc); }
-  .nav-links a[data-section="influence"].active .dot { opacity: 1; transform: scale(1.3); }
-
-  .nav-links a[data-section="lexique"].active        { color: var(--taupe-pale); border-bottom-color: var(--taupe); }
-  .nav-links a[data-section="lexique"] .dot          { background: var(--taupe); }
-  .nav-links a[data-section="lexique"].active .dot   { opacity: 1; transform: scale(1.3); }
-
-  .nav-links a[data-section="medias"].active         { color: var(--taupe-pale); border-bottom-color: var(--taupe); }
-  .nav-links a[data-section="medias"] .dot           { background: var(--taupe); }
-  .nav-links a[data-section="medias"].active .dot    { opacity: 1; transform: scale(1.3); }
-
-  /* ============================================================
-     BARRE DE PROGRESSION LATÉRALE — repère de position
-  ============================================================ */
-  .progress-rail {
-    position: fixed;
-    right: 0;
-    top: 60px;
-    bottom: 0;
-    width: 4px;
-    z-index: 150;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .progress-segment {
-    flex: 1;
-    opacity: 0.15;
-    transition: opacity 0.4s;
-  }
-
-  .progress-segment.active { opacity: 1; }
-  .progress-segment[data-seg="marketing"]     { background: var(--c01-acc); }
-  .progress-segment[data-seg="communication"] { background: var(--c02-acc); }
-  .progress-segment[data-seg="evenementiel"]  { background: #1a5c42; }
-  .progress-segment[data-seg="influence"]     { background: var(--c04-acc); }
-  .progress-segment[data-seg="lexique"]       { background: var(--taupe); }
-  .progress-segment[data-seg="medias"]        { background: var(--taupe); }
-
-  /* ============================================================
-     PILL FLOTTANTE — indique la section en cours
-  ============================================================ */
-  .section-pill {
-    position: fixed;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 150;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-end;
-  }
-
-  .pill-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    opacity: 0.2;
-    transition: opacity 0.4s, width 0.4s, border-radius 0.4s;
-    cursor: pointer;
-  }
-
-  .pill-dot.active { opacity: 1; width: 24px; border-radius: 4px; }
-
-  .pill-dot[data-pill="marketing"]     { background: var(--c01-acc); }
-  .pill-dot[data-pill="communication"] { background: var(--c02-acc); }
-  .pill-dot[data-pill="evenementiel"]  { background: #1a5c42; }
-  .pill-dot[data-pill="influence"]     { background: var(--c04-acc); }
-  .pill-dot[data-pill="lexique"]       { background: var(--taupe); }
-  .pill-dot[data-pill="medias"]        { background: var(--taupe); }
-
-  /* ============================================================
-     HERO
-  ============================================================ */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 5rem 7rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 65% 55% at 80% 20%, rgba(57,5,23,0.55) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 10% 85%, rgba(22,48,43,0.6) 0%, transparent 55%),
-      linear-gradient(155deg, #03110D 0%, #07120e 55%, #0e0307 100%);
-  }
-
-  .hero-bg::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(163,133,96,0.022) 60px),
-      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(163,133,96,0.022) 60px);
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 45%;
-    background: linear-gradient(to top, var(--noir), transparent);
-  }
-
-  .hero-eyebrow {
-    font-size: 0.63rem;
-    letter-spacing: 0.38em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 1.8rem;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    width: 2.5rem; height: 1px;
-    background: var(--taupe);
-    opacity: 0.5;
-  }
-
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 300;
-    line-height: 1.02;
-    max-width: 900px;
-  }
-
-  .hero h1 em { font-style: italic; color: var(--taupe-pale); }
-
-  .hero h1 .acc {
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(163,133,96,0.4);
-  }
-
-  .hero-sub {
-    margin-top: 2.5rem;
-    font-size: 0.88rem;
-    color: rgba(224,224,224,0.55);
-    max-width: 420px;
-    line-height: 1.95;
-    border-left: 2px solid rgba(163,133,96,0.22);
-    padding-left: 1.3rem;
-  }
-
-  /* Légende couleurs dans le hero */
-  .hero-legend {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    flex-wrap: wrap;
-    position: relative;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(224,224,224,0.45);
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  .legend-item:hover { color: var(--gris-clair); }
-
-  .legend-swatch {
-    width: 10px; height: 10px;
-    border-radius: 2px;
-  }
-
-  .legend-swatch.m1 { background: var(--c01-acc); }
-  .legend-swatch.m2 { background: var(--c02-acc); }
-  .legend-swatch.m3 { background: #1a5c42; }
-  .legend-swatch.m4 { background: var(--c04-acc); }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 3rem; right: 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.58rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    opacity: 0.5;
-  }
-
-  .hero-scroll::after {
-    content: '';
-    width: 1px; height: 3.5rem;
-    background: linear-gradient(to bottom, var(--taupe), transparent);
-    animation: scrollLine 2.2s ease-in-out infinite;
-  }
-
-  @keyframes scrollLine {
-    0%,100% { opacity: 0.3; transform: translateY(0); }
-    50% { opacity: 0.9; transform: translateY(8px); }
-  }
-
-  /* ============================================================
-     MODULES OVERVIEW
-  ============================================================ */
-  .modules-intro {
-    background: #040c09;
-    border-top: 1px solid rgba(163,133,96,0.12);
-    border-bottom: 1px solid rgba(163,133,96,0.12);
-    padding: 6rem 5rem;
-  }
-
-  .section-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--taupe);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .section-label::after {
-    content: '';
-    width: 2.5rem; height: 1px;
-    background: var(--taupe);
-    opacity: 0.3;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: 300;
-    line-height: 1.15;
-    margin-bottom: 3rem;
-    max-width: 600px;
-  }
-
-  .section-title em { font-style: italic; color: var(--taupe-pale); }
-
-  .modules-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-
-  /* Chaque carte affiche clairement sa couleur de module */
-  .module-card {
-    padding: 3rem 2rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-    border-right: 1px solid rgba(163,133,96,0.08);
-  }
-
-  .module-card:last-child { border-right: none; }
-
-  .module-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    transition: height 0.4s;
-  }
-
-  .module-card:hover::before { height: 8px; }
-  .module-card:hover { transform: translateY(-3px); }
-
-  .module-card.m1 { background: linear-gradient(160deg, rgba(22,48,43,0.35) 0%, rgba(5,14,11,0.9) 100%); }
-  .module-card.m1::before { background: var(--c01-acc); }
-
-  .module-card.m2 { background: linear-gradient(160deg, rgba(57,5,23,0.35) 0%, rgba(5,14,11,0.9) 100%); }
-  .module-card.m2::before { background: var(--c02-acc); }
-
-  .module-card.m3 { background: linear-gradient(160deg, rgba(3,17,13,0.6) 0%, rgba(5,14,11,0.9) 100%); }
-  .module-card.m3::before { background: #1a5c42; }
-
-  .module-card.m4 { background: linear-gradient(160deg, rgba(44,26,6,0.35) 0%, rgba(5,14,11,0.9) 100%); }
-  .module-card.m4::before { background: var(--c04-acc); }
-
-  .module-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1;
-    margin-bottom: 1rem;
-    opacity: 0.25;
-  }
-
-  .module-card.m1 .module-num { color: #4d9e87; }
-  .module-card.m2 .module-num { color: #c0566e; }
-  .module-card.m3 .module-num { color: #4d9e87; }
-  .module-card.m4 .module-num { color: var(--taupe-pale); }
-
-  .module-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 0.7rem;
-    color: var(--blanc);
-  }
-
-  .module-card p { font-size: 0.8rem; color: rgba(224,224,224,0.45); line-height: 1.78; }
-
-  .module-badge {
-    display: inline-block;
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
-    border-radius: 2px;
-    margin-bottom: 1rem;
-    font-weight: 500;
-  }
-
-  .module-card.m1 .module-badge { background: rgba(22,48,43,0.6); color: #4d9e87; }
-  .module-card.m2 .module-badge { background: rgba(57,5,23,0.6); color: #c0566e; }
-  .module-card.m3 .module-badge { background: rgba(26,92,66,0.3); color: #4d9e87; }
-  .module-card.m4 .module-badge { background: rgba(90,58,16,0.4); color: var(--taupe-pale); }
-
-  /* ============================================================
-     CONTENT SECTIONS — chacune avec son identité couleur claire
-  ============================================================ */
-  .content-section {
-    padding: 7rem 5rem;
-    position: relative;
-  }
-
-  /* Bordure gauche colorée — repère immédiat */
-  .content-section::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 5px;
-  }
-
-  #marketing    { background: linear-gradient(180deg, rgba(22,48,43,0.22) 0%, rgba(5,14,11,0.98) 100%); }
-  #marketing::before    { background: linear-gradient(to bottom, var(--c01-acc), transparent); }
-
-  #communication { background: linear-gradient(180deg, rgba(57,5,23,0.22) 0%, rgba(5,14,11,0.98) 100%); }
-  #communication::before { background: linear-gradient(to bottom, var(--c02-acc), transparent); }
-
-  #evenementiel { background: linear-gradient(180deg, rgba(3,17,13,0.45) 0%, rgba(5,14,11,0.98) 100%); }
-  #evenementiel::before { background: linear-gradient(to bottom, #1a5c42, transparent); }
-
-  #influence { background: linear-gradient(180deg, rgba(44,26,6,0.22) 0%, rgba(5,14,11,0.98) 100%); }
-  #influence::before { background: linear-gradient(to bottom, var(--c04-acc), transparent); }
-
-  #lexique { background: linear-gradient(180deg, rgba(22,48,43,0.15) 0%, rgba(5,14,11,0.98) 100%); }
-  #lexique::before { background: linear-gradient(to bottom, var(--taupe), transparent); }
-
-  #medias { background: linear-gradient(180deg, rgba(57,5,23,0.15) 0%, rgba(5,14,11,0.98) 100%); }
-  #medias::before { background: linear-gradient(to bottom, var(--taupe), transparent); }
-
-  /* En-tête de section avec badge couleur */
-  .section-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .section-color-bar {
-    width: 4px;
-    border-radius: 2px;
-    flex-shrink: 0;
-    margin-top: 0.3rem;
-    align-self: stretch;
-    min-height: 60px;
-  }
-
-  #marketing    .section-color-bar { background: var(--c01-acc); }
-  #communication .section-color-bar { background: var(--c02-acc); }
-  #evenementiel .section-color-bar { background: #1a5c42; }
-  #influence    .section-color-bar { background: var(--c04-acc); }
-  #lexique      .section-color-bar { background: var(--taupe); }
-  #medias       .section-color-bar { background: var(--taupe); }
-
-  /* Numéro de module dans l'en-tête */
-  .section-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-
-  #marketing    .section-num { color: #4d9e87; }
-  #communication .section-num { color: #c0566e; }
-  #evenementiel .section-num { color: #4d9e87; }
-  #influence    .section-num { color: var(--taupe-pale); }
-  #lexique      .section-num, #medias .section-num { color: var(--taupe); }
-
-  .section-main-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: 300;
-    line-height: 1.12;
-    max-width: 580px;
-  }
-
-  .section-main-title em { font-style: italic; color: var(--taupe-pale); }
-
-  /* Layout deux colonnes */
-  .content-layout {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 6rem;
-    align-items: start;
-  }
-
-  .content-sticky { position: sticky; top: 8rem; }
-
-  .section-desc {
-    font-size: 0.82rem;
-    color: rgba(224,224,224,0.48);
-    line-height: 1.9;
-    margin-top: 1.5rem;
-  }
-
-  /* Divider coloré */
-  .divider {
-    width: 3rem; height: 1px;
-    margin: 1.5rem 0;
-  }
-
-  #marketing    .divider { background: linear-gradient(to right, var(--c01-acc), transparent); }
-  #communication .divider { background: linear-gradient(to right, var(--c02-acc), transparent); }
-  #evenementiel .divider { background: linear-gradient(to right, #1a5c42, transparent); }
-  #influence    .divider { background: linear-gradient(to right, var(--c04-acc), transparent); }
-  #lexique .divider, #medias .divider { background: linear-gradient(to right, var(--taupe), transparent); }
-
-  /* Tags */
-  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
-
-  .tag {
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.28rem 0.8rem;
-    border: 1px solid;
-    font-weight: 400;
-    transition: all 0.3s;
-  }
-
-  #marketing    .tag { border-color: rgba(42,84,72,0.4); color: rgba(77,158,135,0.6); }
-  #marketing    .tag:hover { border-color: var(--c01-acc); color: #4d9e87; }
-
-  #communication .tag { border-color: rgba(122,21,48,0.4); color: rgba(192,86,110,0.6); }
-  #communication .tag:hover { border-color: var(--c02-acc); color: #c0566e; }
-
-  #evenementiel .tag { border-color: rgba(26,92,66,0.4); color: rgba(77,158,135,0.6); }
-  #evenementiel .tag:hover { border-color: #1a5c42; color: #4d9e87; }
-
-  #influence    .tag { border-color: rgba(90,58,16,0.4); color: rgba(201,169,122,0.6); }
-  #influence    .tag:hover { border-color: var(--c04-acc); color: var(--taupe-pale); }
-
-  /* ============================================================
-     PROSE CONTENU
-  ============================================================ */
-  .prose h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.45rem;
-    font-weight: 400;
-    margin: 2.5rem 0 0.8rem;
-  }
-
-  .prose h3:first-child { margin-top: 0; }
-
-  #marketing    .prose h3 { color: #4d9e87; }
-  #communication .prose h3 { color: #c0566e; }
-  #evenementiel .prose h3 { color: #4d9e87; }
-  #influence    .prose h3 { color: var(--taupe-pale); }
-  #lexique      .prose h3, #medias .prose h3 { color: var(--taupe-pale); }
-
-  .prose p {
-    font-size: 0.87rem;
-    color: rgba(224,224,224,0.6);
-    margin-bottom: 1rem;
-    line-height: 1.9;
-  }
-
-  .prose ul { list-style: none; margin: 0.8rem 0 1.5rem; }
-
-  .prose ul li {
-    font-size: 0.85rem;
-    color: rgba(224,224,224,0.57);
-    padding: 0.45rem 0 0.45rem 1.3rem;
-    border-left: 2px solid;
-    margin-bottom: 0.5rem;
-    line-height: 1.78;
-    transition: border-color 0.3s;
-  }
-
-  #marketing    .prose ul li { border-left-color: rgba(42,84,72,0.25); }
-  #marketing    .prose ul li:hover { border-left-color: var(--c01-acc); }
-  #communication .prose ul li { border-left-color: rgba(122,21,48,0.25); }
-  #communication .prose ul li:hover { border-left-color: var(--c02-acc); }
-  #evenementiel .prose ul li { border-left-color: rgba(26,92,66,0.25); }
-  #evenementiel .prose ul li:hover { border-left-color: #1a5c42; }
-  #influence    .prose ul li { border-left-color: rgba(90,58,16,0.3); }
-  #influence    .prose ul li:hover { border-left-color: var(--c04-acc); }
-
-  .prose ul li strong { color: var(--gris-clair); font-weight: 500; }
-
-  .quote-block {
-    padding: 1.3rem 1.8rem;
-    margin: 2.2rem 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: var(--taupe-pale);
-    line-height: 1.7;
-  }
-
-  #marketing    .quote-block { border-left: 3px solid var(--c01-acc); background: rgba(22,48,43,0.2); }
-  #communication .quote-block { border-left: 3px solid var(--c02-acc); background: rgba(57,5,23,0.2); }
-  #evenementiel .quote-block { border-left: 3px solid #1a5c42; background: rgba(26,92,66,0.15); }
-  #influence    .quote-block { border-left: 3px solid var(--c04-acc); background: rgba(44,26,6,0.25); }
-
-  /* ============================================================
-     CARDS
-  ============================================================ */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    margin-top: 2rem;
-    background: rgba(163,133,96,0.06);
-  }
-
-  .card {
-    background: var(--noir);
-    padding: 1.8rem;
-    transition: background 0.3s;
-  }
-
-  #marketing    .card:hover { background: rgba(22,48,43,0.25); }
-  #communication .card:hover { background: rgba(57,5,23,0.25); }
-  #evenementiel .card:hover { background: rgba(26,92,66,0.15); }
-  #influence    .card:hover { background: rgba(44,26,6,0.3); }
-  #medias       .card:hover { background: rgba(57,5,23,0.15); }
-
-  .card-icon { font-size: 1.25rem; margin-bottom: 0.8rem; opacity: 0.7; }
-
-  .card h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-  }
-
-  #marketing    .card h4 { color: #4d9e87; }
-  #communication .card h4 { color: #c0566e; }
-  #evenementiel .card h4 { color: #4d9e87; }
-  #influence    .card h4 { color: var(--taupe-pale); }
-  #medias       .card h4 { color: var(--taupe-pale); }
-
-  .card p { font-size: 0.79rem; color: rgba(224,224,224,0.52); line-height: 1.72; }
-
-  /* ============================================================
-     TABS
-  ============================================================ */
-  .tabs { margin-top: 2.2rem; }
-
-  .tab-nav {
-    display: flex;
-    border-bottom: 1px solid rgba(163,133,96,0.12);
-    flex-wrap: wrap;
-  }
-
-  .tab-btn {
-    background: none; border: none;
-    color: rgba(224,224,224,0.35);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.85rem 1.3rem;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: all 0.3s;
-    font-weight: 400;
-  }
-
-  #communication .tab-btn.active,
-  #communication .tab-btn:hover { color: #c0566e; border-bottom-color: var(--c02-acc); }
-
-  .tab-content { display: none; padding-top: 2rem; }
-  .tab-content.active { display: block; }
-
-  /* ============================================================
-     TIMELINE
-  ============================================================ */
-  .timeline { position: relative; padding-left: 2rem; margin-top: 2rem; }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, #1a5c42, var(--taupe), transparent);
-  }
-
-  .timeline-item { position: relative; padding-bottom: 2.5rem; padding-left: 1.5rem; }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -2.38rem; top: 0.5rem;
-    width: 0.5rem; height: 0.5rem;
-    background: #1a5c42;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(26,92,66,0.5);
-  }
-
-  .timeline-item h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: #4d9e87;
-    margin-bottom: 0.4rem;
-  }
-
-  .timeline-item p { font-size: 0.81rem; color: rgba(224,224,224,0.52); line-height: 1.78; }
-
-  /* ============================================================
-     STATS
-  ============================================================ */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
-    padding: 3rem 0;
-    border-top: 1px solid rgba(26,92,66,0.2);
-    border-bottom: 1px solid rgba(26,92,66,0.2);
-  }
-
-  .stat { text-align: center; }
-
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.4rem;
-    font-weight: 300;
-    color: #4d9e87;
-    line-height: 1;
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 0.66rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(224,224,224,0.38);
-    margin-top: 0.5rem;
-    display: block;
-  }
-
-  /* ============================================================
-     LEXIQUE
-  ============================================================ */
-  .lexique-search {
-    width: 100%;
-    max-width: 420px;
-    background: rgba(163,133,96,0.04);
-    border: 1px solid rgba(163,133,96,0.18);
-    color: var(--blanc);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.85rem;
-    padding: 0.95rem 1.3rem;
-    outline: none;
-    margin-bottom: 2.5rem;
-    transition: border-color 0.3s;
-  }
-
-  .lexique-search:focus { border-color: var(--taupe); }
-  .lexique-search::placeholder { color: rgba(163,133,96,0.28); }
-
-  .lexique-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 1px;
-    background: rgba(163,133,96,0.06);
-  }
-
-  .lex-item { background: var(--noir); padding: 1.3rem 1.6rem; transition: background 0.25s; }
-  .lex-item:hover { background: rgba(22,48,43,0.2); }
-
-  .lex-term {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.98rem;
-    font-weight: 600;
-    color: var(--taupe);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-  }
-
-  .lex-def { font-size: 0.75rem; color: rgba(224,224,224,0.48); line-height: 1.65; }
-
-  /* ============================================================
-     MEDIAS
-  ============================================================ */
-  .medias-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1px;
-    margin-top: 2rem;
-    background: rgba(163,133,96,0.06);
-  }
-
-  .media-card { background: var(--noir); padding: 2.2rem; transition: background 0.3s; }
-  .media-card:hover { background: rgba(57,5,23,0.18); }
-
-  .media-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--c02-acc);
-    margin-bottom: 0.8rem;
-    font-weight: 500;
-  }
-
-  .media-card h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin-bottom: 0.6rem;
-    color: var(--taupe-pale);
-  }
-
-  .media-card p { font-size: 0.79rem; color: rgba(224,224,224,0.48); line-height: 1.78; }
-
-  /* ============================================================
-     FOOTER
-  ============================================================ */
-  footer {
-    padding: 3.5rem 5rem;
-    background: #030b08;
-    border-top: 1px solid rgba(163,133,96,0.12);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* Bandes couleur footer */
-  .footer-modules {
-    display: flex;
-    gap: 0.4rem;
-    align-items: center;
-  }
-
-  .footer-chip {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.7rem;
-    border-radius: 2px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.3s;
-    opacity: 0.6;
-  }
-
-  .footer-chip:hover { opacity: 1; }
-  .footer-chip.m1 { background: rgba(22,48,43,0.5); color: #4d9e87; }
-  .footer-chip.m2 { background: rgba(57,5,23,0.5); color: #c0566e; }
-  .footer-chip.m3 { background: rgba(26,92,66,0.3); color: #4d9e87; }
-  .footer-chip.m4 { background: rgba(44,26,6,0.5); color: var(--taupe-pale); }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--taupe);
-    letter-spacing: 0.12em;
-  }
-
-  .footer-note { font-size: 0.7rem; color: rgba(224,224,224,0.28); }
-
-  /* ============================================================
-     REVEAL
-  ============================================================ */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.75s ease, transform 0.75s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ============================================================
-     RESPONSIVE
-  ============================================================ */
-  @media (max-width: 1000px) {
-    .modules-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 900px) {
-    nav { height: auto; flex-wrap: wrap; padding: 0; }
-    .nav-logo { padding: 1rem 1.5rem; width: 100%; border-right: none; border-bottom: 1px solid rgba(163,133,96,0.1); }
-    .nav-links { gap: 0; overflow-x: auto; }
-    .nav-links a { padding: 0.7rem 1rem; font-size: 0.62rem; }
-    .section-pill, .progress-rail { display: none; }
-    .content-section { padding: 4rem 1.5rem; }
-    .modules-intro { padding: 4rem 1.5rem; }
-    .content-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .content-sticky { position: static; }
-    .hero { padding: 0 1.5rem 5rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2.5rem 1.5rem; }
-    .modules-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 600px) {
-    .modules-grid { grid-template-columns: 1fr; }
-    .hero-legend { display: none; }
-  }
-
-  /* ============================================================
-     GRANDS TITRES DÉCORATIFS
-  ============================================================ */
-  .section-deco-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(4rem, 9vw, 8rem);
-    line-height: 1.0;
-    margin-bottom: 3rem;
-    max-width: 900px;
-  }
-  .section-deco-title .line-normal { display: block; color: var(--blanc); }
-  .section-deco-title .line-italic { display: block; font-style: italic; color: var(--taupe-pale); }
-  .section-deco-title .line-ghost  { display: block; color: transparent; -webkit-text-stroke: 1.5px rgba(163,133,96,0.35); }
-
-  #marketing    .section-deco-title .line-italic { color: #4d9e87; }
-  #marketing    .section-deco-title .line-ghost  { -webkit-text-stroke-color: rgba(77,158,135,0.35); }
-  #communication .section-deco-title .line-italic { color: #c0566e; }
-  #communication .section-deco-title .line-ghost  { -webkit-text-stroke-color: rgba(192,86,110,0.35); }
-  #evenementiel .section-deco-title .line-italic  { color: #4d9e87; }
-  #evenementiel .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(26,92,66,0.45); }
-  #influence    .section-deco-title .line-italic  { color: var(--taupe-pale); }
-  #influence    .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(163,133,96,0.35); }
-  #lexique      .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(163,133,96,0.3); }
-  #medias       .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(163,133,96,0.3); }
-  #librairie    .section-deco-title .line-italic  { color: #8ab4d4; }
-  #librairie    .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(42,100,150,0.4); }
-  #quiz         .section-deco-title .line-italic  { color: #b48cdc; }
-  #quiz         .section-deco-title .line-ghost   { -webkit-text-stroke-color: rgba(180,140,220,0.4); }
-
-  /* ============================================================
-     NAV — librairie & quiz
-  ============================================================ */
-  .nav-links a[data-section="librairie"].active      { color: #8ab4d4; border-bottom-color: #2a6496; }
-  .nav-links a[data-section="librairie"] .dot        { background: #2a6496; }
-  .nav-links a[data-section="librairie"].active .dot { opacity: 1; transform: scale(1.3); }
-  .nav-links a[data-section="quiz"].active           { color: #b48cdc; border-bottom-color: #6a2a96; }
-  .nav-links a[data-section="quiz"] .dot             { background: #6a2a96; }
-  .nav-links a[data-section="quiz"].active .dot      { opacity: 1; transform: scale(1.3); }
-
-  .progress-segment[data-seg="librairie"] { background: #2a6496; }
-  .progress-segment[data-seg="quiz"]      { background: #6a2a96; }
-  .pill-dot[data-pill="librairie"]        { background: #2a6496; }
-  .pill-dot[data-pill="quiz"]             { background: #6a2a96; }
-
-  #librairie    .section-color-bar { background: #2a6496; }
-  #quiz         .section-color-bar { background: #6a2a96; }
-  #librairie { background: linear-gradient(180deg, rgba(42,100,150,0.15) 0%, rgba(5,14,11,0.98) 100%); }
-  #librairie::before { background: linear-gradient(to bottom, #2a6496, transparent); }
-  #quiz { background: linear-gradient(180deg, rgba(100,42,150,0.12) 0%, rgba(5,14,11,0.98) 100%); }
-  #quiz::before { background: linear-gradient(to bottom, #6a2a96, transparent); }
-
-  /* ============================================================
-     LIBRAIRIE
-  ============================================================ */
-  .librairie-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem; margin-top: 2rem;
-  }
-  .lib-card {
-    background: rgba(42,100,150,0.07); border: 1px solid rgba(42,100,150,0.18);
-    border-radius: 4px; padding: 1.8rem;
-    transition: transform 0.3s, border-color 0.3s, background 0.3s;
-    position: relative; overflow: hidden;
-  }
-  .lib-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, #2a6496, transparent); }
-  .lib-card:hover { transform: translateY(-4px); border-color: rgba(42,100,150,0.4); background: rgba(42,100,150,0.12); }
-  .lib-type { display:inline-block; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.18rem 0.6rem; border-radius:2px; background:rgba(42,100,150,0.25); color:#8ab4d4; margin-bottom:1rem; font-weight:500; }
-  .lib-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:400; margin-bottom:0.3rem; color:var(--blanc); }
-  .lib-author { font-size:0.72rem; color:#8ab4d4; margin-bottom:0.8rem; opacity:0.75; }
-  .lib-card p { font-size:0.79rem; color:rgba(224,224,224,0.5); line-height:1.78; }
-  .lib-card .lib-tag-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1rem; }
-  .lib-card .lib-tag { font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.15rem 0.5rem; border:1px solid rgba(163,133,96,0.2); border-radius:2px; color:rgba(224,224,224,0.38); }
-  .lib-filters { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:2rem; }
-  .lib-filter-btn { background:transparent; border:1px solid rgba(42,100,150,0.25); color:rgba(224,224,224,0.45); font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; padding:0.35rem 1rem; border-radius:2px; cursor:pointer; transition:all 0.25s; }
-  .lib-filter-btn:hover, .lib-filter-btn.active { background:rgba(42,100,150,0.2); border-color:#2a6496; color:#8ab4d4; }
-
-  /* ============================================================
-     QUIZ
-  ============================================================ */
-  .quiz-wrapper { max-width:680px; margin:0 auto; }
-  .quiz-progress-bar { height:3px; background:rgba(163,133,96,0.12); border-radius:2px; margin-bottom:3rem; overflow:hidden; }
-  .quiz-progress-fill { height:100%; background:linear-gradient(to right,#6a2a96,#b48cdc); border-radius:2px; transition:width 0.5s ease; width:0%; }
-  .quiz-question { display:none; animation:fadeUp 0.4s ease; }
-  .quiz-question.active { display:block; }
-  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-  .quiz-q-num { font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:#b48cdc; margin-bottom:1rem; }
-  .quiz-q-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,2.5vw,1.9rem); font-weight:300; line-height:1.35; margin-bottom:2rem; color:var(--blanc); }
-  .quiz-options { display:flex; flex-direction:column; gap:0.75rem; }
-  .quiz-opt { background:rgba(106,42,150,0.07); border:1px solid rgba(106,42,150,0.22); color:rgba(224,224,224,0.65); font-family:'Jost',sans-serif; font-size:0.83rem; font-weight:300; padding:1rem 1.4rem; border-radius:3px; cursor:pointer; text-align:left; transition:all 0.25s; line-height:1.55; }
-  .quiz-opt:hover:not(:disabled) { background:rgba(106,42,150,0.18); border-color:rgba(106,42,150,0.5); color:var(--blanc); }
-  .quiz-opt.correct { background:rgba(26,92,66,0.25); border-color:#1a5c42; color:#4d9e87; }
-  .quiz-opt.wrong   { background:rgba(122,21,48,0.2);  border-color:var(--c02-acc); color:#c0566e; }
-  .quiz-opt:disabled { cursor:default; }
-  .quiz-feedback { margin-top:1.2rem; font-size:0.8rem; line-height:1.75; color:rgba(224,224,224,0.55); font-style:italic; padding-left:1rem; border-left:2px solid rgba(163,133,96,0.2); min-height:2rem; }
-  .quiz-nav { display:flex; justify-content:space-between; align-items:center; margin-top:2.5rem; }
-  .quiz-btn { background:transparent; border:1px solid rgba(106,42,150,0.35); color:rgba(224,224,224,0.55); font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.6rem 1.8rem; border-radius:2px; cursor:pointer; transition:all 0.25s; }
-  .quiz-btn:hover:not(:disabled) { background:rgba(106,42,150,0.2); border-color:#6a2a96; color:#b48cdc; }
-  .quiz-btn:disabled { opacity:0.25; cursor:default; }
-  .quiz-btn.primary { background:rgba(106,42,150,0.25); border-color:#6a2a96; color:#b48cdc; }
-  .quiz-score-panel { display:none; text-align:center; padding:4rem 2rem; }
-  .quiz-score-panel.visible { display:block; }
-  .quiz-score-big { font-family:'Cormorant Garamond',serif; font-size:clamp(5rem,12vw,9rem); font-weight:300; line-height:1; color:#b48cdc; margin-bottom:0.5rem; }
-  .quiz-score-label { font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(224,224,224,0.35); margin-bottom:2rem; }
-  .quiz-score-msg { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-style:italic; color:var(--taupe-pale); margin-bottom:2.5rem; }
-  .quiz-restart-btn { background:transparent; border:1px solid rgba(106,42,150,0.4); color:#b48cdc; font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; padding:0.75rem 2.5rem; cursor:pointer; border-radius:2px; transition:all 0.3s; }
-  .quiz-restart-btn:hover { background:rgba(106,42,150,0.2); border-color:#6a2a96; }
-
-  /* ============================================================
-     HERO — grands titres + position relative
-  ============================================================ */
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4.5rem, 10vw, 9rem);
-    font-weight: 300;
-    line-height: 1.02;
-    max-width: 960px;
-    position: relative;
-  }
-  .hero h1 em { font-style: italic; color: var(--taupe-pale); }
-  .hero h1 .acc { color: transparent; -webkit-text-stroke: 1.5px rgba(163,133,96,0.4); }
-  .hero-sub { position: relative; }
-
-  /* ============================================================
-     EFFETS DYNAMIQUES
-  ============================================================ */
-
-  /* Barre de progression */
-  #read-progress {
-    position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-    z-index: 9999; pointer-events: none;
-    background: linear-gradient(90deg, #2a5448, #c9a97a, #7a1530);
-    transition: width 0.08s linear;
-  }
-
-  /* Curseur — uniquement souris */
-  @media (pointer: fine) {
-    body { cursor: none; }
-    a, button, [onclick], .module-card, .card, .lib-card, .media-card { cursor: none; }
-  }
-  #cur-dot {
-    display: none; position: fixed; width: 7px; height: 7px;
-    background: var(--taupe-pale); border-radius: 50%;
-    pointer-events: none; z-index: 99999;
-    transform: translate(-50%,-50%);
-  }
-  #cur-ring {
-    display: none; position: fixed; width: 34px; height: 34px;
-    border: 1px solid rgba(201,169,122,0.5); border-radius: 50%;
-    pointer-events: none; z-index: 99998;
-    transform: translate(-50%,-50%);
-    transition: width 0.25s, height 0.25s, border-color 0.25s;
-  }
-  @media (pointer: fine) {
-    #cur-dot, #cur-ring { display: block; }
-  }
-  #cur-ring.big   { width: 54px; height: 54px; border-color: rgba(201,169,122,0.9); }
-  #cur-ring.small { width: 20px; height: 20px; }
-
-  /* Compteurs */
-  .stat-counters {
-    display: flex; gap: 3rem; flex-wrap: wrap; margin-bottom: 3rem;
-  }
-  .stat-c {
-    display: flex; flex-direction: column; align-items: flex-start;
-  }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6vw, 5rem);
-    font-weight: 300; line-height: 1; color: var(--taupe-pale);
-  }
-  .stat-lbl {
-    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(224,224,224,0.38); margin-top: 0.3rem;
-  }
-
-  /* Hover cards enrichis */
-  .card {
-    transition: background 0.3s, transform 0.35s cubic-bezier(.16,1,.3,1);
-  }
-  #marketing    .card:hover { background: rgba(22,48,43,0.28); transform: translateY(-5px); }
-  #communication .card:hover { background: rgba(57,5,23,0.28);  transform: translateY(-5px); }
-  #evenementiel .card:hover  { background: rgba(26,92,66,0.18);  transform: translateY(-5px); }
-  #influence    .card:hover  { background: rgba(44,26,6,0.35);   transform: translateY(-5px); }
-  #medias       .card:hover  { background: rgba(57,5,23,0.18);   transform: translateY(-5px); }
-
-  .module-card {
-    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
-  }
-  .module-card:hover { transform: translateY(-8px) scale(1.01); }
-
-  /* Révélation au scroll */
-  .reveal {
-    opacity: 0; transform: translateY(28px);
-    transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Hero animations d'entrée */
-  @keyframes hIn { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-  .hero-eyebrow { animation: hIn 0.9s cubic-bezier(.16,1,.3,1) 0.15s both; position: relative; }
-  .hero h1      { animation: hIn 1.0s cubic-bezier(.16,1,.3,1) 0.35s both; }
-  .hero-sub     { animation: hIn 0.9s cubic-bezier(.16,1,.3,1) 0.55s both; }
-  .hero-legend  { animation: hIn 0.9s cubic-bezier(.16,1,.3,1) 0.72s both; position: relative; }
-
-</style>
+<!-- ===== SEO primaire ===== -->
+<title>Académie Marketing | Apprendre le marketing, clairement</title>
+<meta name="description" content="La plateforme pédagogique qui aide les étudiants en marketing à réussir : cours structurés, lexique de 60+ termes, quiz corrigés et une bibliothèque de référence. Clair, gratuit, complet.">
+<meta name="keywords" content="apprendre le marketing, cours marketing, lexique marketing, quiz marketing, fiches marketing, étudiant marketing, marketing digital, marketing événementiel, réviser le marketing">
+<meta name="author" content="Académie Marketing">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="theme-color" content="#03110D">
+<meta name="color-scheme" content="dark light">
+
+<link rel="canonical" href="https://academie-marketing.fr/">
+
+<!-- ===== Open Graph / Twitter ===== -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Académie Marketing">
+<meta property="og:title" content="Apprendre le marketing, clairement — Académie Marketing">
+<meta property="og:description" content="Cours structurés, lexique, quiz corrigés et bibliothèque de référence. La plateforme qui aide les étudiants en marketing à comprendre, réviser et réussir.">
+<meta property="og:url" content="https://academie-marketing.fr/">
+<meta property="og:image" content="https://academie-marketing.fr/assets/og-image.jpg">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Académie Marketing">
+<meta name="twitter:description" content="Apprendre le marketing, clairement : cours, lexique, quiz et lectures de référence pour étudiants.">
+<meta name="twitter:image" content="https://academie-marketing.fr/assets/og-image.jpg">
+
+<!-- ===== Favicon inline ===== -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%2303110D'/%3E%3Crect x='3' y='3' width='58' height='58' rx='11' fill='none' stroke='%23A38560' stroke-width='1'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23c9a97a' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+
+<!-- ===== Polices : chargement non bloquant ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"></noscript>
+
+<!-- ===== Feuille de style partagée ===== -->
+<link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ===== Données structurées ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://academie-marketing.fr/#org",
+      "name": "Académie Marketing",
+      "url": "https://academie-marketing.fr/",
+      "description": "Plateforme pédagogique gratuite qui aide les étudiants en marketing à comprendre, réviser et réussir : cours structurés, lexique, quiz corrigés et bibliographie commentée.",
+      "email": "contact@academie-marketing.fr",
+      "areaServed": { "@type": "Country", "name": "France" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://academie-marketing.fr/#website",
+      "url": "https://academie-marketing.fr/",
+      "name": "Académie Marketing",
+      "inLanguage": "fr-FR",
+      "publisher": { "@id": "https://academie-marketing.fr/#org" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": { "@type": "EntryPoint", "urlTemplate": "https://academie-marketing.fr/lexique.html?q={search_term_string}" },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Modules — Académie marketing",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Les fondamentaux du marketing", "url": "https://academie-marketing.fr/cours/fondamentaux-du-marketing.html" },
+        { "@type": "ListItem", "position": 2, "name": "Stratégie & analyse de marché", "url": "https://academie-marketing.fr/cours.html" },
+        { "@type": "ListItem", "position": 3, "name": "Marketing digital", "url": "https://academie-marketing.fr/cours.html" },
+        { "@type": "ListItem", "position": 4, "name": "Communication & marque", "url": "https://academie-marketing.fr/cours.html" },
+        { "@type": "ListItem", "position": 5, "name": "Marketing événementiel", "url": "https://academie-marketing.fr/cours/marketing-evenementiel.html" },
+        { "@type": "ListItem", "position": 6, "name": "Données, mesure & performance", "url": "https://academie-marketing.fr/cours.html" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://academie-marketing.fr/#faq",
+      "inLanguage": "fr-FR",
+      "mainEntity": [
+        { "@type": "Question", "name": "Qu'est-ce que le marketing mix (les 4P) ?", "acceptedAnswer": { "@type": "Answer", "text": "Le marketing mix réunit les quatre leviers opérationnels d'une stratégie marketing : le Produit (l'offre), le Prix, la Place (la distribution) et la Promotion (la communication). On parle des « 4P ». Ces leviers se complètent ensuite par 3P supplémentaires pour les services (Personnel, Processus, Preuve physique)." } },
+        { "@type": "Question", "name": "Comment réviser efficacement le marketing ?", "acceptedAnswer": { "@type": "Answer", "text": "Alternez compréhension et entraînement : lisez un cours pour saisir la logique d'un concept, vérifiez le vocabulaire dans un lexique, puis testez-vous avec des quiz corrigés. La répétition espacée et la mise en pratique sur des cas concrets ancrent durablement les notions." } },
+        { "@type": "Question", "name": "La plateforme est-elle gratuite ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui. Les cours, le lexique et les quiz sont entièrement gratuits. La bibliothèque propose des liens vers des ouvrages : certains sont des liens d'affiliation qui financent la plateforme, sans surcoût pour vous." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<div id="read-progress"></div>
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Stratégies Événementielles</div>
-  <ul class="nav-links">
-    <li><a href="#marketing"     data-section="marketing">
-      <span class="dot"></span>Marketing
-    </a></li>
-    <li><a href="#communication" data-section="communication">
-      <span class="dot"></span>Communication
-    </a></li>
-    <li><a href="#evenementiel"  data-section="evenementiel">
-      <span class="dot"></span>Événementiel
-    </a></li>
-    <li><a href="#influence"     data-section="influence">
-      <span class="dot"></span>Influence
-    </a></li>
-    <li><a href="#lexique"       data-section="lexique">
-      <span class="dot"></span>Lexique
-    </a></li>
-    <li><a href="#medias"        data-section="medias">
-      <span class="dot"></span>Médias
-    </a></li>
-    <li><a href="#librairie"     data-section="librairie">
-      <span class="dot"></span>Librairie
-    </a></li>
-    <li><a href="#quiz"          data-section="quiz">
-      <span class="dot"></span>Quiz
-    </a></li>
-  </ul>
-</nav>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="read-progress" id="read-progress"></div>
 
-<!-- BARRE LATÉRALE -->
-<div class="progress-rail">
-  <div class="progress-segment" data-seg="marketing"></div>
-  <div class="progress-segment" data-seg="communication"></div>
-  <div class="progress-segment" data-seg="evenementiel"></div>
-  <div class="progress-segment" data-seg="influence"></div>
-  <div class="progress-segment" data-seg="lexique"></div>
-  <div class="progress-segment" data-seg="medias"></div>
-  <div class="progress-segment" data-seg="librairie"></div>
-  <div class="progress-segment" data-seg="quiz"></div>
+<!-- ===================== NAVIGATION ===================== -->
+<header class="nav" id="nav" role="banner">
+  <a class="nav-logo" href="index.html">Académie Marketing</a>
+  <nav class="nav-main" aria-label="Navigation principale">
+    <ul class="nav-links">
+      <li><a href="index.html" class="active" aria-current="page">Accueil</a></li>
+      <li><a href="cours.html">Parcours</a></li>
+      <li><a href="lexique.html">Lexique</a></li>
+      <li><a href="livres.html">Livres</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="a-propos.html">À propos</a></li>
+    </ul>
+  </nav>
+  <div class="nav-actions">
+    <a class="btn btn-primary nav-cta" href="cours.html">Commencer</a>
+    <button class="nav-burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== MENU MOBILE ===================== -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav aria-label="Navigation mobile">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="cours.html">Parcours</a>
+    <a href="lexique.html">Lexique</a>
+    <a href="livres.html">Livres</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="a-propos.html">À propos</a>
+    <a class="btn btn-primary" href="cours.html">Commencer les cours</a>
+  </nav>
 </div>
 
-<!-- PILLS LATÉRALES -->
-<div class="section-pill">
-  <div class="pill-dot" data-pill="marketing"     onclick="scrollTo('marketing')"></div>
-  <div class="pill-dot" data-pill="communication" onclick="scrollTo('communication')"></div>
-  <div class="pill-dot" data-pill="evenementiel"  onclick="scrollTo('evenementiel')"></div>
-  <div class="pill-dot" data-pill="influence"     onclick="scrollTo('influence')"></div>
-  <div class="pill-dot" data-pill="lexique"       onclick="scrollTo('lexique')"></div>
-  <div class="pill-dot" data-pill="medias"        onclick="scrollTo('medias')"></div>
-  <div class="pill-dot" data-pill="librairie"     onclick="scrollTo('librairie')"></div>
-  <div class="pill-dot" data-pill="quiz"          onclick="scrollTo('quiz')"></div>
-</div>
+<main id="contenu">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-eyebrow">Manuel Professionnel — ICC & Marketing</div>
-  <h1>Stratégies<br><em>Événementielles</em><br><span class="acc">& Marketing</span></h1>
-  <p class="hero-sub">Un guide complet du marketing stratégique, de la communication, du marketing d'influence et de l'organisation événementielle.</p>
-  <div class="hero-legend">
-    <div class="legend-item" onclick="document.getElementById('marketing').scrollIntoView({behavior:'smooth'})">
-      <span class="legend-swatch m1"></span>Marketing
+  <!-- ===================== HERO ===================== -->
+  <section class="hero on-dark is-hero" aria-labelledby="hero-title">
+    <div class="hero-media">
+      <img
+        src="https://images.unsplash.com/photo-1758873268998-2f77c2d38862?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+        srcset="https://images.unsplash.com/photo-1758873268998-2f77c2d38862?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80 1200w, https://images.unsplash.com/photo-1758873268998-2f77c2d38862?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80 1920w"
+        sizes="100vw" width="1920" height="1280" fetchpriority="high" decoding="async"
+        alt="Étudiants en atelier de marketing autour d'un tableau, travail collaboratif sur une stratégie">
+      <div class="hero-overlay"></div>
     </div>
-    <div class="legend-item" onclick="document.getElementById('communication').scrollIntoView({behavior:'smooth'})">
-      <span class="legend-swatch m2"></span>Communication
-    </div>
-    <div class="legend-item" onclick="document.getElementById('evenementiel').scrollIntoView({behavior:'smooth'})">
-      <span class="legend-swatch m3"></span>Événementiel
-    </div>
-    <div class="legend-item" onclick="document.getElementById('influence').scrollIntoView({behavior:'smooth'})">
-      <span class="legend-swatch m4"></span>Influence
-    </div>
-  </div>
-  <div class="hero-scroll">Scroll</div>
-</section>
-
-<!-- MODULES OVERVIEW -->
-<section class="modules-intro">
-  <div class="section-label">Structure du programme</div>
-  <h2 class="section-title">Quatre modules <em>essentiels</em></h2>
-  <div class="stat-counters">
-    <div class="stat-c"><span class="stat-num" data-to="4" data-suf="">0</span><span class="stat-lbl">Modules</span></div>
-    <div class="stat-c"><span class="stat-num" data-to="50" data-suf="+">0</span><span class="stat-lbl">Termes au lexique</span></div>
-    <div class="stat-c"><span class="stat-num" data-to="15" data-suf="">0</span><span class="stat-lbl">Questions quiz</span></div>
-    <div class="stat-c"><span class="stat-num" data-to="12" data-suf="">0</span><span class="stat-lbl">Lectures librairie</span></div>
-  </div>
-  <div class="modules-grid">
-    <div class="module-card m1" onclick="document.getElementById('marketing').scrollIntoView({behavior:'smooth'})">
-      <div class="module-badge">Module 01</div>
-      <div class="module-num">01</div>
-      <h3>Marketing Stratégique</h3>
-      <p>Comprendre le marché, segmenter, cibler et positionner une offre avec précision.</p>
-    </div>
-    <div class="module-card m2" onclick="document.getElementById('communication').scrollIntoView({behavior:'smooth'})">
-      <div class="module-badge">Module 02</div>
-      <div class="module-num">02</div>
-      <h3>Plan de Communication</h3>
-      <p>Audit, objectifs, message, cibles, supports et suivi des performances.</p>
-    </div>
-    <div class="module-card m3" onclick="document.getElementById('evenementiel').scrollIntoView({behavior:'smooth'})">
-      <div class="module-badge">Module 03</div>
-      <div class="module-num">03</div>
-      <h3>Stratégie Événementielle</h3>
-      <p>Concevoir, piloter et évaluer un événement du brief au bilan post-événement.</p>
-    </div>
-    <div class="module-card m4" onclick="document.getElementById('influence').scrollIntoView({behavior:'smooth'})">
-      <div class="module-badge">Module 04</div>
-      <div class="module-num">04</div>
-      <h3>Marketing d'Influence</h3>
-      <p>Collaborations marques-influenceurs, réseaux sociaux et réglementation.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MODULE 1 : MARKETING -->
-<section id="marketing" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Module 01 — Marketing</div>
-      <h2 class="section-deco-title"><span class="line-normal">Marketing</span><span class="line-italic">Stratégique</span><span class="line-ghost">& Opérationnel</span></h2>
-    </div>
-  </div>
-  <div class="content-layout">
-    <div class="content-sticky">
-      <p class="section-desc">Du comportement consommateur à la mise en marché : les fondations indispensables pour toute stratégie commerciale.</p>
-      <div class="divider"></div>
-      <div class="tag-row">
-        <span class="tag">Segmentation</span><span class="tag">Positionnement</span><span class="tag">Mix 4P</span><span class="tag">SWOT</span>
+    <div class="container">
+      <span class="eyebrow">Académie marketing · 100 % gratuit</span>
+      <h1 class="display" id="hero-title">Maîtrisez le marketing,<span class="sub-line">un concept à la fois</span></h1>
+      <p class="hero-sub">Des cours structurés, un lexique clair de 60+ termes, des quiz corrigés et une bibliothèque de référence. Tout ce dont un étudiant en marketing a besoin pour <strong style="color:var(--clair-100);font-weight:400;">comprendre, réviser et réussir</strong>.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="cours.html">Commencer les cours <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-secondary" href="lexique.html">Explorer le lexique</a>
+      </div>
+      <form class="hero-search search-box" id="hero-search" action="lexique.html" method="get" role="search">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" name="q" placeholder="Rechercher un concept (ROI, SWOT, funnel…)" aria-label="Rechercher un concept dans le lexique">
+      </form>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="stat-num">6</span><span class="stat-label">modules, des fondamentaux à la mesure de performance</span></div>
+        <div class="hero-stat"><span class="stat-num">60+</span><span class="stat-label">termes expliqués dans le lexique interactif</span></div>
+        <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">quiz corrigés pour tester vos connaissances</span></div>
+        <div class="hero-stat"><span class="stat-num">16</span><span class="stat-label">ouvrages de référence sélectionnés et commentés</span></div>
       </div>
     </div>
-    <div class="prose">
-      <h3>Comprendre le marché</h3>
-      <p>Le marketing part d'une analyse rigoureuse du marché : qui sont les acteurs, quelle est la demande, quels sont les concurrents ? Cette phase de diagnostic passe par l'étude des tendances de consommation, l'analyse des forces en présence et l'identification des opportunités non exploitées.</p>
+    <span class="scroll-cue" aria-hidden="true">Défiler</span>
+  </section>
 
-      <h3>Le comportement du consommateur</h3>
-      <p>Comprendre pourquoi et comment les consommateurs prennent leurs décisions d'achat est au cœur du marketing. Les facteurs psychologiques, sociaux et culturels influencent profondément les comportements.</p>
-      <ul>
-        <li><strong>La motivation</strong> — force qui pousse l'individu à agir pour satisfaire un besoin (pyramide de Maslow)</li>
-        <li><strong>La perception</strong> — façon dont on sélectionne et interprète les informations reçues</li>
-        <li><strong>L'attitude</strong> — prédisposition favorable ou défavorable envers un produit ou une marque</li>
-        <li><strong>L'influence sociale</strong> — rôle des pairs, prescripteurs et leaders d'opinion</li>
-      </ul>
-
-      <h3>Segmentation & Ciblage</h3>
-      <p>Segmenter, c'est diviser un marché hétérogène en groupes homogènes partageant des caractéristiques communes.</p>
-      <div class="cards-grid">
-        <div class="card"><div class="card-icon">🗺️</div><h4>Géographique</h4><p>Région, ville, climat, densité. Adapte l'offre aux réalités locales.</p></div>
-        <div class="card"><div class="card-icon">👥</div><h4>Démographique</h4><p>Âge, sexe, revenu, éducation. Le plus utilisé car facilement mesurable.</p></div>
-        <div class="card"><div class="card-icon">🧠</div><h4>Psychographique</h4><p>Style de vie, valeurs, personnalité. Permet une communication ciblée.</p></div>
-        <div class="card"><div class="card-icon">🛒</div><h4>Comportemental</h4><p>Fréquence d'achat, fidélité, usage et occasions de consommation.</p></div>
+  <!-- ===================== VALEUR / MÉTHODE D'APPRENTISSAGE ===================== -->
+  <section class="section on-paper" id="methode" aria-labelledby="methode-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Comment ça marche</span>
+        <h2 id="methode-title">Une méthode simple pour <em>apprendre vraiment</em></h2>
+        <p class="lead">On ne progresse pas en accumulant des définitions, mais en alternant compréhension, entraînement et révision. La plateforme est construite autour de ce cycle.</p>
       </div>
-
-      <h3>Positionnement</h3>
-      <p>Le positionnement est l'image que l'on souhaite ancrer dans l'esprit du consommateur par rapport à la concurrence. Il doit être clair, crédible, distinctif et durable.</p>
-      <div class="quote-block">« Le positionnement n'est pas ce qu'on fait au produit, c'est ce qu'on fait à l'esprit du prospect. » — Ries & Trout</div>
-
-      <h3>L'analyse SWOT</h3>
-      <p>La matrice SWOT structure l'analyse interne (Forces, Faiblesses) et externe (Opportunités, Menaces) pour orienter les décisions stratégiques et identifier les axes prioritaires.</p>
-
-      <h3>Le Mix Marketing — Les 4P</h3>
-      <ul>
-        <li><strong>Produit (Product)</strong> — caractéristiques, design, qualité, packaging, gamme</li>
-        <li><strong>Prix (Price)</strong> — stratégie tarifaire, promotions, conditions de paiement</li>
-        <li><strong>Distribution (Place)</strong> — canaux de vente, couverture géographique, logistique</li>
-        <li><strong>Communication (Promotion)</strong> — publicité, relations presse, digital, événementiel</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- MODULE 2 : COMMUNICATION -->
-<section id="communication" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Module 02 — Communication</div>
-      <h2 class="section-deco-title"><span class="line-normal">Plan de</span><span class="line-italic">Communication</span><span class="line-ghost">Stratégique</span></h2>
-    </div>
-  </div>
-  <div class="content-layout">
-    <div class="content-sticky">
-      <p class="section-desc">Structurer une stratégie de communication efficace du diagnostic à la mesure des résultats.</p>
-      <div class="divider"></div>
-      <div class="tag-row">
-        <span class="tag">Audit</span><span class="tag">Storytelling</span><span class="tag">Media planning</span><span class="tag">KPI</span>
-      </div>
-    </div>
-    <div class="prose">
-      <h3>L'audit de communication</h3>
-      <p>Avant toute action, il faut dresser un état des lieux précis : quelle est l'image actuelle de la marque ? Quels supports utilise-t-elle ? L'audit permet de partir de la réalité, pas d'hypothèses.</p>
-
-      <div class="tabs">
-        <div class="tab-nav">
-          <button class="tab-btn active" onclick="showTab(this,'obj')">Objectifs</button>
-          <button class="tab-btn" onclick="showTab(this,'msg')">Message</button>
-          <button class="tab-btn" onclick="showTab(this,'cible')">Ciblage</button>
-          <button class="tab-btn" onclick="showTab(this,'supp')">Supports</button>
-          <button class="tab-btn" onclick="showTab(this,'crise')">Crise</button>
+      <div class="grid grid-4 reveal-group">
+        <div class="feature">
+          <span class="icon-pill is-vert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 8v6l9 5 9-5V8"/></svg></span>
+          <h3>Comprendre</h3>
+          <p>Des cours structurés qui expliquent la logique de chaque concept, avec des exemples concrets — pas seulement des définitions à recopier.</p>
         </div>
-        <div id="obj" class="tab-content active">
-          <ul>
-            <li><strong>Cognitif (Faire Savoir)</strong> — notoriété, reconnaissance, mémorisation du message</li>
-            <li><strong>Affectif (Faire Aimer)</strong> — image, préférence, attachement à la marque</li>
-            <li><strong>Conatif (Faire Agir)</strong> — achat, inscription, partage, participation</li>
-          </ul>
-          <p>Chaque objectif doit être SMART : Spécifique, Mesurable, Atteignable, Réaliste, Temporel.</p>
+        <div class="feature">
+          <span class="icon-pill is-bleu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></span>
+          <h3>S'entraîner</h3>
+          <p>Des quiz corrigés par thème pour vérifier ce que vous retenez réellement, avec une explication après chaque réponse.</p>
         </div>
-        <div id="msg" class="tab-content">
-          <ul>
-            <li><strong>La promesse</strong> — bénéfice principal proposé au consommateur</li>
-            <li><strong>La preuve</strong> — élément qui crédibilise la promesse (data, témoignage, certification)</li>
-            <li><strong>Le ton</strong> — registre de la prise de parole (sérieux, ludique, inspirant, expert)</li>
-            <li><strong>Le storytelling</strong> — narration autour de la marque pour créer de l'émotion et de la mémorabilité</li>
-          </ul>
+        <div class="feature">
+          <span class="icon-pill is-dore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3" y="5" width="14" height="16" rx="2"/><path d="M7 5V3.5A1.5 1.5 0 0 1 8.5 2H20a1.5 1.5 0 0 1 1.5 1.5V17"/><line x1="6.5" y1="9.5" x2="13.5" y2="9.5"/><line x1="6.5" y1="13" x2="13.5" y2="13"/></svg></span>
+          <h3>Réviser</h3>
+          <p>Un lexique clair et cherchable pour ne plus jamais bloquer sur un terme, avec les formules de calcul des indicateurs clés.</p>
         </div>
-        <div id="cible" class="tab-content">
-          <p>On distingue la cible principale (le consommateur final), la cible secondaire (les prescripteurs) et le cœur de cible (les plus engagés).</p>
-          <p>L'outil du <strong>persona</strong> humanise la cible : prénom fictif, âge, profession, habitudes digitales, motivations et freins à l'achat.</p>
-        </div>
-        <div id="supp" class="tab-content">
-          <ul>
-            <li><strong>Owned media</strong> — site web, réseaux sociaux, newsletter, blog de la marque</li>
-            <li><strong>Paid media</strong> — publicité display, social ads, SEA, affichage, TV</li>
-            <li><strong>Earned media</strong> — relations presse, bouche-à-oreille, UGC, avis clients</li>
-          </ul>
-        </div>
-        <div id="crise" class="tab-content">
-          <ul>
-            <li><strong>Réactivité</strong> — répondre rapidement avant que la rumeur s'emballe</li>
-            <li><strong>Transparence</strong> — reconnaître les faits sans minimiser ni surjouer</li>
-            <li><strong>Empathie</strong> — montrer qu'on prend en compte l'impact sur les personnes</li>
-            <li><strong>Cohérence</strong> — maintenir un message unifié sur tous les canaux</li>
-          </ul>
+        <div class="feature">
+          <span class="icon-pill is-bordeaux"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 19.5V6a2 2 0 0 1 2-2h12a1 1 0 0 1 1 1v13"/><path d="M6 17h13"/><path d="M6 21h13a1 1 0 0 0 1-1v-1.5"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22"/></svg></span>
+          <h3>Aller plus loin</h3>
+          <p>Une bibliographie commentée : les ouvrages de référence du marketing, choisis et résumés pour des étudiants.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <h3 style="margin-top:2.8rem;">Pilotage & Indicateurs</h3>
-      <div class="cards-grid">
-        <div class="card"><div class="card-icon">📊</div><h4>Notoriété</h4><p>Taux de mémorisation, reach, impressions, part de voix.</p></div>
-        <div class="card"><div class="card-icon">💬</div><h4>Engagement</h4><p>Likes, commentaires, partages, taux d'engagement.</p></div>
-        <div class="card"><div class="card-icon">🎯</div><h4>Conversion</h4><p>CTR, leads générés, inscriptions, achats réalisés.</p></div>
-        <div class="card"><div class="card-icon">📈</div><h4>ROI</h4><p>Retour sur investissement : (Gains – Coûts) / Coûts × 100.</p></div>
+  <!-- ===================== PARCOURS / MODULES ===================== -->
+  <section class="section on-paper is-alt cv-auto" id="parcours" aria-labelledby="parcours-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Les parcours</span>
+        <h2 id="parcours-title">Six modules pour couvrir <em>tout le marketing</em></h2>
+        <p class="lead">Un programme progressif, des bases jusqu'à la mesure de la performance. Suivez l'ordre conseillé ou piochez le module qui vous manque.</p>
+      </div>
+      <div class="grid grid-3 reveal-group">
+
+        <a class="module-card accent-vert" href="cours/fondamentaux-du-marketing.html">
+          <div class="module-top">
+            <span class="icon-pill is-vert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 8v6l9 5 9-5V8"/></svg></span>
+            <span class="module-num">Module 01</span>
+          </div>
+          <h3>Les fondamentaux du marketing</h3>
+          <p class="module-desc">Définition, besoins et valeur, marketing mix (4P/7P), segmentation, ciblage et positionnement (STP).</p>
+          <div class="module-foot">
+            <span class="module-meta">5 chapitres · Débutant</span>
+            <span class="module-cta">Commencer <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="module-card accent-bordeaux" href="cours.html#strategie">
+          <div class="module-top">
+            <span class="icon-pill is-bordeaux"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l5-4 5 4"/><path d="M15 21V11l4-2v12"/><path d="M9 12h2M9 16h2"/></svg></span>
+            <span class="module-num">Module 02</span>
+          </div>
+          <h3>Stratégie &amp; analyse de marché</h3>
+          <p class="module-desc">SWOT, PESTEL, 5 forces de Porter, persona et insight, proposition de valeur et avantage concurrentiel.</p>
+          <div class="module-foot">
+            <span class="module-meta">5 chapitres · Intermédiaire</span>
+            <span class="module-cta">Découvrir <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="module-card accent-bleu" href="cours/marketing-digital.html">
+          <div class="module-top">
+            <span class="icon-pill is-bleu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/></svg></span>
+            <span class="module-num">Module 03</span>
+          </div>
+          <h3>Marketing digital</h3>
+          <p class="module-desc">SEO &amp; SEA, inbound marketing, funnel de conversion, réseaux sociaux, e-mailing et publicité en ligne.</p>
+          <div class="module-foot">
+            <span class="module-meta">5 chapitres · Intermédiaire</span>
+            <span class="module-cta">Commencer <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="module-card accent-dore" href="cours.html#communication">
+          <div class="module-top">
+            <span class="icon-pill is-dore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15.5 8.5a4 4 0 0 1 0 7"/><path d="M18 6a7 7 0 0 1 0 12"/></svg></span>
+            <span class="module-num">Module 04</span>
+          </div>
+          <h3>Communication &amp; marque</h3>
+          <p class="module-desc">Branding et identité, storytelling, plateforme de marque, relations presse et communication 360.</p>
+          <div class="module-foot">
+            <span class="module-meta">5 chapitres · Intermédiaire</span>
+            <span class="module-cta">Découvrir <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="module-card accent-vert-clair" href="cours/marketing-evenementiel.html">
+          <div class="module-top">
+            <span class="icon-pill is-vert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/><path d="M8 14l2 2 4-4"/></svg></span>
+            <span class="module-num">Module 05</span>
+          </div>
+          <h3>Marketing événementiel</h3>
+          <p class="module-desc">L'événement comme levier, le brief, la méthode de production en 5 étapes et la mesure du ROI événementiel.</p>
+          <div class="module-foot">
+            <span class="module-meta">4 chapitres · Intermédiaire</span>
+            <span class="module-cta">Commencer <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="module-card accent-bleu" href="cours.html#mesure">
+          <div class="module-top">
+            <span class="icon-pill is-bleu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 2 4-6"/></svg></span>
+            <span class="module-num">Module 06</span>
+          </div>
+          <h3>Données, mesure &amp; performance</h3>
+          <p class="module-desc">KPI et objectifs SMART, ROI et ROAS, analytics, tableaux de bord et lecture de la performance.</p>
+          <div class="module-foot">
+            <span class="module-meta">5 chapitres · Avancé</span>
+            <span class="module-cta">Découvrir <span class="arrow" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+      </div>
+      <div class="cluster reveal" style="margin-top:2.5rem;">
+        <a class="btn btn-secondary" href="cours.html">Voir tous les parcours</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- MODULE 3 : EVENEMENTIEL -->
-<section id="evenementiel" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Module 03 — Événementiel</div>
-      <h2 class="section-deco-title"><span class="line-normal">Stratégie</span><span class="line-italic">Événementielle</span><span class="line-ghost">& Live</span></h2>
+  <!-- ===================== PULLQUOTE ===================== -->
+  <section class="section is-tight on-dark is-emphasis pullquote-band" aria-label="Citation">
+    <div class="container-narrow reveal">
+      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>On ne retient pas ce que l'on lit, mais ce que l'on <em>comprend et met en pratique</em>.</blockquote>
+      <cite>Le principe qui guide toute la plateforme</cite>
     </div>
-  </div>
-  <div class="content-layout">
-    <div class="content-sticky">
-      <p class="section-desc">De la conception à l'évaluation : orchestrer des événements qui marquent les esprits.</p>
-      <div class="divider"></div>
-      <div class="tag-row">
-        <span class="tag">Rétroplanning</span><span class="tag">Budget</span><span class="tag">Expérience</span><span class="tag">Évaluation</span>
+  </section>
+
+  <!-- ===================== LEXIQUE (aperçu) ===================== -->
+  <section class="section on-dark is-savoir cv-auto" id="apercu-lexique" aria-labelledby="lex-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow is-bleu">Lexique</span>
+        <h2 id="lex-title">Le vocabulaire du marketing, <em>enfin sans flou</em></h2>
+        <p class="lead">Plus de 60 termes définis simplement, avec les formules des indicateurs clés. De quoi décoder un cours, un article ou un brief sans rester bloqué.</p>
+      </div>
+      <div class="lex-grid reveal-group">
+        <div class="lex-item"><div class="lex-cat">Données &amp; mesure</div><div class="lex-term">ROI</div><div class="lex-def">Retour sur investissement : mesure la rentabilité d'une action en comparant le gain net au coût engagé.<span class="lex-formula">ROI = (Gains − Coûts) / Coûts × 100</span></div></div>
+        <div class="lex-item"><div class="lex-cat">Stratégie</div><div class="lex-term">Positionnement</div><div class="lex-def">Place qu'une marque cherche à occuper dans l'esprit de sa cible, par rapport à la concurrence.</div></div>
+        <div class="lex-item"><div class="lex-cat">Consommateur</div><div class="lex-term">Persona</div><div class="lex-def">Portrait fictif et détaillé d'un client type, utilisé pour guider les décisions marketing et créatives.</div></div>
+        <div class="lex-item"><div class="lex-cat">Digital</div><div class="lex-term">Funnel</div><div class="lex-def">Entonnoir de conversion : le parcours du prospect, de la découverte de la marque jusqu'à l'achat.</div></div>
+      </div>
+      <div class="cluster reveal" style="margin-top:2rem;">
+        <a class="btn btn-link" href="lexique.html">Ouvrir le lexique complet <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
-    <div class="prose">
-      <h3>Définir les objectifs</h3>
-      <p>Tout événement répond à des objectifs précis : lancement produit, fidélisation, notoriété, fédération d'équipes, génération de leads… Ces objectifs conditionnent toutes les décisions suivantes.</p>
+  </section>
 
-      <div class="cards-grid">
-        <div class="card"><div class="card-icon">🎯</div><h4>Objectifs</h4><p>Quantifiables et réalistes. Ex : « Générer 200 leads qualifiés sur le salon. »</p></div>
-        <div class="card"><div class="card-icon">👤</div><h4>Public cible</h4><p>Profil précis des participants : BtoB, BtoC, grand public, journalistes…</p></div>
-        <div class="card"><div class="card-icon">📅</div><h4>Format</h4><p>Conférence, salon, soirée, pop-up, festival, webinaire, hybride…</p></div>
-        <div class="card"><div class="card-icon">💶</div><h4>Budget</h4><p>Enveloppe répartie entre lieu, technique, communication et imprévus.</p></div>
+  <!-- ===================== LIVRES (aperçu) ===================== -->
+  <section class="section on-paper cv-auto" id="apercu-livres" aria-labelledby="livres-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Bibliothèque</span>
+        <h2 id="livres-title">Les livres qui font les bons <em>marketeurs</em></h2>
+        <p class="lead">Une sélection d'ouvrages de référence, résumés et classés par thème et par niveau — pour prolonger les cours et nourrir votre culture marketing.</p>
       </div>
-
-      <h3>Le rétroplanning</h3>
-      <div class="timeline">
-        <div class="timeline-item"><h4>J−90 : Conception & cadrage</h4><p>Validation du concept, réservation du lieu, définition du budget, brief prestataires.</p></div>
-        <div class="timeline-item"><h4>J−60 : Production & communication</h4><p>Création des supports visuels, lancement des invitations, plan de communication pré-événement.</p></div>
-        <div class="timeline-item"><h4>J−30 : Confirmations & logistique</h4><p>Confirmation prestataires, gestion inscriptions, plan de salle, programme définitif.</p></div>
-        <div class="timeline-item"><h4>J−7 : Derniers préparatifs</h4><p>Répétitions, vérification technique, brief sécurité, relance participants.</p></div>
-        <div class="timeline-item"><h4>Jour J : Exécution</h4><p>Accueil, animation, gestion des imprévus, documentation photos/vidéos.</p></div>
-        <div class="timeline-item"><h4>J+7 : Bilan</h4><p>Analyse KPI, debriefing équipes, envoi remerciements, capitalisation.</p></div>
+      <div class="grid grid-3 reveal-group">
+        <article class="book-card">
+          <div class="book-cover"><span class="book-rank">★ Essentiel</span><span class="book-spine">Influence<br>&amp; manipulation</span></div>
+          <div class="book-body">
+            <div class="book-type">Psychologie &amp; influence</div>
+            <h3>Influence</h3>
+            <div class="book-author">Robert Cialdini</div>
+            <p class="book-desc">Les six grands principes de la persuasion, illustrés d'exemples concrets. Une lecture fondatrice pour comprendre pourquoi les gens disent « oui ».</p>
+          </div>
+        </article>
+        <article class="book-card">
+          <div class="book-cover"><span class="book-rank">★ Classique</span><span class="book-spine">Positioning</span></div>
+          <div class="book-body">
+            <div class="book-type">Stratégie</div>
+            <h3>Positioning</h3>
+            <div class="book-author">Al Ries &amp; Jack Trout</div>
+            <p class="book-desc">L'ouvrage de référence sur le positionnement : comment occuper une place unique dans l'esprit du consommateur sur un marché saturé.</p>
+          </div>
+        </article>
+        <article class="book-card">
+          <div class="book-cover"><span class="book-rank">★ Incontournable</span><span class="book-spine">Building a<br>StoryBrand</span></div>
+          <div class="book-body">
+            <div class="book-type">Communication &amp; storytelling</div>
+            <h3>Building a StoryBrand</h3>
+            <div class="book-author">Donald Miller</div>
+            <p class="book-desc">Une méthode narrative pour clarifier son message en plaçant le client en héros de l'histoire. Directement applicable à toute campagne.</p>
+          </div>
+        </article>
       </div>
-
-      <h3>Indicateurs de succès</h3>
-      <div class="stats-row">
-        <div class="stat"><span class="stat-num">→ %</span><span class="stat-label">Taux de participation</span></div>
-        <div class="stat"><span class="stat-num">NPS</span><span class="stat-label">Satisfaction</span></div>
-        <div class="stat"><span class="stat-num">ROI</span><span class="stat-label">Retour financier</span></div>
-        <div class="stat"><span class="stat-num">📢</span><span class="stat-label">Couverture médias</span></div>
-      </div>
-
-      <h3>Sponsoring & Partenariats</h3>
-      <p>Un partenaire financier ou en nature apporte des ressources en échange d'une visibilité ciblée. Le dossier de sponsoring doit présenter clairement l'événement, l'audience et les contreparties offertes.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MODULE 4 : INFLUENCE -->
-<section id="influence" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Module 04 — Influence</div>
-      <h2 class="section-deco-title"><span class="line-normal">Marketing</span><span class="line-italic">d'Influence</span><span class="line-ghost">& Réseaux</span></h2>
-    </div>
-  </div>
-  <div class="content-layout">
-    <div class="content-sticky">
-      <p class="section-desc">Collaborations marques-influenceurs, algorithmes, e-réputation et cadre réglementaire.</p>
-      <div class="divider"></div>
-      <div class="tag-row">
-        <span class="tag">Influenceurs</span><span class="tag">UGC</span><span class="tag">E-réputation</span><span class="tag">Loi 2023</span>
+      <div class="cluster reveal" style="margin-top:2rem;">
+        <a class="btn btn-secondary" href="livres.html">Voir la bibliothèque complète</a>
+        <span class="aff-note"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg> Certains liens sont affiliés</span>
       </div>
     </div>
-    <div class="prose">
-      <h3>L'écosystème des influenceurs</h3>
-      <div class="cards-grid">
-        <div class="card"><div class="card-icon">🌟</div><h4>Nano</h4><p>1 000–10 000 abonnés. Engagement très élevé, communauté de niche très ciblée.</p></div>
-        <div class="card"><div class="card-icon">⭐</div><h4>Micro</h4><p>10 000–100 000. Bon équilibre portée/engagement. Spécialisation forte.</p></div>
-        <div class="card"><div class="card-icon">💫</div><h4>Macro</h4><p>100 000–1M. Large portée, audience diversifiée. Campagnes de notoriété.</p></div>
-        <div class="card"><div class="card-icon">🏆</div><h4>Célébrités</h4><p>+1M. Portée maximale, engagement plus faible, coût très élevé.</p></div>
+  </section>
+
+  <!-- ===================== QUIZ (bande) ===================== -->
+  <section class="section is-tight on-dark is-deep" id="apercu-quiz" aria-labelledby="quiz-band-title">
+    <div class="container">
+      <div class="split">
+        <div class="reveal">
+          <span class="eyebrow">Auto-évaluation</span>
+          <h2 id="quiz-band-title" style="margin:1rem 0 1.2rem;">Vous croyez avoir compris ? <em>Vérifiez-le.</em></h2>
+          <p class="lead" style="color:var(--on-dark-muted);">Cinq quiz corrigés, par thème. Chaque réponse est expliquée pour transformer une erreur en apprentissage. Le meilleur moyen de savoir ce qui est acquis… et ce qui ne l'est pas encore.</p>
+          <div class="hero-cta" style="margin-top:2rem;">
+            <a class="btn btn-primary" href="quiz.html">Faire un quiz <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="grid grid-2" style="gap:1rem;">
+            <div class="card"><div class="meta-row" style="margin-bottom:.6rem;"><span>Débutant</span></div><h4 style="color:var(--clair-100);">Fondamentaux</h4></div>
+            <div class="card"><div class="meta-row" style="margin-bottom:.6rem;"><span>Intermédiaire</span></div><h4 style="color:var(--clair-100);">Marketing digital</h4></div>
+            <div class="card"><div class="meta-row" style="margin-bottom:.6rem;"><span>Intermédiaire</span></div><h4 style="color:var(--clair-100);">Communication</h4></div>
+            <div class="card"><div class="meta-row" style="margin-bottom:.6rem;"><span>Avancé</span></div><h4 style="color:var(--clair-100);">Données &amp; KPI</h4></div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <h3>Construire une collaboration</h3>
-      <ul>
-        <li><strong>Identification</strong> — choisir selon l'audience, les valeurs et le taux d'engagement</li>
-        <li><strong>Le brief</strong> — objectifs, message, contraintes légales et livrables attendus</li>
-        <li><strong>Les formats</strong> — placement produit, unboxing, revue, code promo, concours, takeover</li>
-        <li><strong>La mesure</strong> — reach, engagement rate, clics et conversions via UTM ou code promo</li>
-      </ul>
+  <!-- ===================== NEWSLETTER ===================== -->
+  <section class="section on-dark is-deep" id="newsletter" aria-labelledby="news-title">
+    <div class="container-narrow">
+      <div class="newsletter reveal">
+        <span class="eyebrow is-bleu is-centered">La notion de la semaine</span>
+        <h2 id="news-title">Un concept marketing clé, <em>chaque semaine</em></h2>
+        <p>Recevez une notion expliquée simplement, un exemple et un mini-exercice. Parfait pour réviser sans y penser. Pas de spam, désabonnement en un clic.</p>
+        <form class="newsletter-form" data-demo data-done="Inscrit ✓" data-success="news-success" novalidate>
+          <input type="email" name="email" required placeholder="vous@exemple.com" aria-label="Votre adresse e-mail">
+          <button class="btn btn-primary" type="submit">S'inscrire</button>
+        </form>
+        <p class="form-consent">En vous inscrivant, vous acceptez de recevoir nos e-mails pédagogiques. Aucune donnée n'est partagée à des tiers.</p>
+        <div class="form-success" id="news-success" role="status">Merci ! Votre première notion arrive très vite dans votre boîte mail.</div>
+      </div>
+    </div>
+  </section>
 
-      <h3>Les réseaux sociaux & algorithmes</h3>
-      <ul>
-        <li><strong>Instagram</strong> — Reels favorisés, Exploration basée sur l'engagement, Stories pour fidéliser</li>
-        <li><strong>TikTok</strong> — Algorithme de découverte très puissant, contenu court et authentique</li>
-        <li><strong>YouTube</strong> — SEO vidéo, watch time, Shorts pour l'acquisition, long format pour fidéliser</li>
-        <li><strong>LinkedIn</strong> — Contenu expert B2B, reach organique fort, algorithme conversationnel</li>
-      </ul>
+</main>
 
-      <h3>E-réputation & Veille</h3>
-      <p>L'e-réputation est l'ensemble des perceptions que les internautes ont d'une marque en ligne. La veille régulière (Google Alerts, Mention, Brandwatch) permet d'anticiper les crises et de réagir à temps.</p>
-
-      <h3>Cadre réglementaire (France)</h3>
-      <p>Depuis la <strong>loi du 9 juin 2023</strong>, toute publication sponsorisée doit être clairement identifiée avec la mention « Publicité » ou « Collaboration commerciale ». Les produits financiers, médicaux et cosmétiques font l'objet de restrictions spécifiques.</p>
-      <div class="quote-block">Transparence et authenticité ne sont pas seulement des obligations légales — ce sont des facteurs clés d'engagement durable.</div>
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="nav-logo" href="index.html">Académie Marketing</a>
+        <p>La plateforme pédagogique qui aide les étudiants en marketing à comprendre, réviser et réussir. Cours, lexique, quiz et lectures de référence — clairement expliqués.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Apprendre</h5>
+        <a href="cours.html">Parcours &amp; cours</a>
+        <a href="lexique.html">Lexique</a>
+        <a href="quiz.html">Quiz</a>
+      </div>
+      <div class="footer-col">
+        <h5>Ressources</h5>
+        <a href="livres.html">Bibliothèque</a>
+        <a href="cours/fondamentaux-du-marketing.html">Les fondamentaux</a>
+        <a href="cours/marketing-evenementiel.html">Marketing événementiel</a>
+      </div>
+      <div class="footer-col">
+        <h5>À propos</h5>
+        <a href="a-propos.html">Notre mission</a>
+        <a href="a-propos.html#contact">Contact</a>
+        <a href="a-propos.html#affiliation">Transparence affiliation</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span data-year></span> Académie Marketing.</p>
+      <p class="placeholder-note">Plateforme éducative en construction — contenus enrichis régulièrement.</p>
     </div>
   </div>
-</section>
-
-<!-- LEXIQUE -->
-<section id="lexique" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Référence</div>
-      <h2 class="section-deco-title"><span class="line-normal">Lexique</span><span class="line-italic">Professionnel</span><span class="line-ghost">& Définitions</span></h2>
-    </div>
-  </div>
-  <p style="font-size:0.82rem;color:rgba(224,224,224,0.42);margin-bottom:2.5rem;">Plus de 50 termes essentiels du marketing, de la communication et de l'événementiel.</p>
-  <input type="text" class="lexique-search" placeholder="Rechercher un terme…" oninput="filterLexique(this.value)">
-  <div class="lexique-grid" id="lexiqueGrid"></div>
-</section>
-
-<!-- MEDIAS -->
-<section id="medias" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Ressources</div>
-      <h2 class="section-deco-title"><span class="line-normal">Médias &</span><span class="line-italic">Veille</span><span class="line-ghost">Sectorielle</span></h2>
-    </div>
-  </div>
-  <p style="font-size:0.82rem;color:rgba(224,224,224,0.42);margin-bottom:2rem;max-width:560px;">Ressources professionnelles incontournables pour rester à la pointe du secteur.</p>
-  <div class="medias-grid">
-    <div class="media-card"><div class="media-tag">Veille digitale</div><h4>Blog du Modérateur</h4><p>Actualité du digital, chiffres clés des réseaux sociaux, études de cas et guides pratiques.</p></div>
-    <div class="media-card"><div class="media-tag">Stratégie & marketing</div><h4>Stratégies</h4><p>Magazine de référence sur la publicité et la communication. Analyses des grandes campagnes.</p></div>
-    <div class="media-card"><div class="media-tag">Industries créatives</div><h4>ADN</h4><p>Informations sur les industries culturelles et créatives : musique, spectacle, design et tech.</p></div>
-    <div class="media-card"><div class="media-tag">Social listening</div><h4>Digimind</h4><p>Plateforme de veille et social intelligence. Analyse e-réputation et benchmark concurrentiel.</p></div>
-    <div class="media-card"><div class="media-tag">Communauté com'</div><h4>We Are Com</h4><p>Observatoire des métiers de la communication. Études, palmarès et événements professionnels.</p></div>
-    <div class="media-card"><div class="media-tag">Conseils pratiques</div><h4>J'ai un pote dans la com</h4><p>Ressources accessibles pour apprendre en communication : templates, guides, retours terrain.</p></div>
-  </div>
-</section>
-
-<!-- LIBRAIRIE DIGITALE -->
-<section id="librairie" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Ressources</div>
-      <h2 class="section-deco-title"><span class="line-normal">Librairie</span><span class="line-italic">Digitale</span><span class="line-ghost">& Lectures</span></h2>
-    </div>
-  </div>
-  <p style="font-size:0.82rem;color:rgba(224,224,224,0.42);margin-bottom:2rem;max-width:560px;">Ouvrages et ressources de référence pour approfondir marketing, communication et événementiel.</p>
-  <div class="lib-filters">
-    <button class="lib-filter-btn active" onclick="filterLib(this,'tous')">Tous</button>
-    <button class="lib-filter-btn" onclick="filterLib(this,'marketing')">Marketing</button>
-    <button class="lib-filter-btn" onclick="filterLib(this,'communication')">Communication</button>
-    <button class="lib-filter-btn" onclick="filterLib(this,'evenementiel')">Événementiel</button>
-    <button class="lib-filter-btn" onclick="filterLib(this,'influence')">Influence & Digital</button>
-    <button class="lib-filter-btn" onclick="filterLib(this,'strategie')">Stratégie</button>
-  </div>
-  <div class="librairie-grid" id="libGrid">
-    <div class="lib-card" data-cat="marketing strategie"><div class="lib-type">Livre fondamental</div><h4>Kotler on Marketing</h4><div class="lib-author">Philip Kotler</div><p>La bible du marketing moderne. Mix, comportement consommateur et stratégie de marque.</p><div class="lib-tag-row"><span class="lib-tag">Marketing</span><span class="lib-tag">Stratégie</span></div></div>
-    <div class="lib-card" data-cat="strategie marketing"><div class="lib-type">Classique</div><h4>Positioning: The Battle for Your Mind</h4><div class="lib-author">Al Ries & Jack Trout</div><p>L'ouvrage de référence sur le positionnement de marque dans l'esprit du consommateur.</p><div class="lib-tag-row"><span class="lib-tag">Positionnement</span><span class="lib-tag">Branding</span></div></div>
-    <div class="lib-card" data-cat="communication strategie"><div class="lib-type">Guide pratique</div><h4>Building a StoryBrand</h4><div class="lib-author">Donald Miller</div><p>Méthode narrative pour clarifier son message de marque autour du client comme héros.</p><div class="lib-tag-row"><span class="lib-tag">Storytelling</span><span class="lib-tag">Communication</span></div></div>
-    <div class="lib-card" data-cat="influence"><div class="lib-type">Psychologie & influence</div><h4>Influence : La Psychologie de la Persuasion</h4><div class="lib-author">Robert Cialdini</div><p>Les 6 principes fondamentaux de la persuasion. Incontournable pour tout marketeur.</p><div class="lib-tag-row"><span class="lib-tag">Persuasion</span><span class="lib-tag">Psychologie</span></div></div>
-    <div class="lib-card" data-cat="evenementiel"><div class="lib-type">Référence professionnelle</div><h4>Event Planning: The Ultimate Guide</h4><div class="lib-author">Judy Allen</div><p>Guide complet de l'organisation événementielle : conception, budget, logistique, bilan.</p><div class="lib-tag-row"><span class="lib-tag">Événementiel</span><span class="lib-tag">Gestion de projet</span></div></div>
-    <div class="lib-card" data-cat="influence"><div class="lib-type">Digital & réseaux</div><h4>Jab, Jab, Jab, Right Hook</h4><div class="lib-author">Gary Vaynerchuk</div><p>Stratégie de contenu sur les réseaux sociaux : apporter de la valeur avant de solliciter.</p><div class="lib-tag-row"><span class="lib-tag">Social Media</span><span class="lib-tag">Contenu</span></div></div>
-    <div class="lib-card" data-cat="marketing strategie"><div class="lib-type">Stratégie disruptive</div><h4>Blue Ocean Strategy</h4><div class="lib-author">W. Chan Kim & Renée Mauborgne</div><p>Créer de nouveaux espaces de marché non contestés plutôt que de se battre sur des marchés saturés.</p><div class="lib-tag-row"><span class="lib-tag">Stratégie</span><span class="lib-tag">Innovation</span></div></div>
-    <div class="lib-card" data-cat="communication"><div class="lib-type">Relations presse</div><h4>Les Relations Presse et Médias</h4><div class="lib-author">Thierry Libaert</div><p>Manuel français de référence sur les RP : dossier de presse, contacts journalistes, crise.</p><div class="lib-tag-row"><span class="lib-tag">RP</span><span class="lib-tag">Médias</span></div></div>
-    <div class="lib-card" data-cat="evenementiel communication"><div class="lib-type">Expérience & live</div><h4>The Experience Economy</h4><div class="lib-author">Pine & Gilmore</div><p>Ouvrage fondateur sur l'économie de l'expérience et les événements mémorables.</p><div class="lib-tag-row"><span class="lib-tag">Expérience</span><span class="lib-tag">Événementiel</span></div></div>
-    <div class="lib-card" data-cat="influence strategie"><div class="lib-type">Inbound marketing</div><h4>Inbound Marketing</h4><div class="lib-author">Brian Halligan & Dharmesh Shah</div><p>La méthode HubSpot pour attirer les clients grâce au contenu plutôt que de les interrompre.</p><div class="lib-tag-row"><span class="lib-tag">SEO</span><span class="lib-tag">Lead génération</span></div></div>
-    <div class="lib-card" data-cat="marketing communication"><div class="lib-type">Identité de marque</div><h4>The Brand Gap</h4><div class="lib-author">Marty Neumeier</div><p>Comment aligner stratégie de marque et exécution créative pour construire une marque forte.</p><div class="lib-tag-row"><span class="lib-tag">Branding</span><span class="lib-tag">Design</span></div></div>
-    <div class="lib-card" data-cat="strategie"><div class="lib-type">Rapport annuel</div><h4>Global Marketing Trends (Deloitte)</h4><div class="lib-author">Deloitte Insights — édition annuelle</div><p>Grandes tendances du marketing mondial : IA, personnalisation, durabilité, confiance.</p><div class="lib-tag-row"><span class="lib-tag">Tendances</span><span class="lib-tag">IA</span></div></div>
-  </div>
-</section>
-
-<!-- QUIZ -->
-<section id="quiz" class="content-section reveal">
-  <div class="section-header">
-    <div class="section-color-bar"></div>
-    <div>
-      <div class="section-num">Auto-évaluation</div>
-      <h2 class="section-deco-title"><span class="line-normal">Quiz</span><span class="line-italic">Interactif</span><span class="line-ghost">& Révisions</span></h2>
-    </div>
-  </div>
-  <p style="font-size:0.82rem;color:rgba(224,224,224,0.42);margin-bottom:3rem;max-width:560px;">Testez vos connaissances en marketing, communication, événementiel et influence. 15 questions, une explication pour chaque réponse.</p>
-  <div class="quiz-wrapper">
-    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizFill"></div></div>
-    <div id="quizQuestions"></div>
-    <div class="quiz-score-panel" id="quizScore">
-      <div class="quiz-score-big" id="scoreBig">—</div>
-      <div class="quiz-score-label">Score final</div>
-      <div class="quiz-score-msg" id="scoreMsg"></div>
-      <button class="quiz-restart-btn" onclick="restartQuiz()">Recommencer le quiz</button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Stratégies Événementielles & Marketing</div>
-  <div class="footer-modules">
-    <span class="footer-chip m1" onclick="document.getElementById('marketing').scrollIntoView({behavior:'smooth'})">Marketing</span>
-    <span class="footer-chip m2" onclick="document.getElementById('communication').scrollIntoView({behavior:'smooth'})">Communication</span>
-    <span class="footer-chip m3" onclick="document.getElementById('evenementiel').scrollIntoView({behavior:'smooth'})">Événementiel</span>
-    <span class="footer-chip m4" onclick="document.getElementById('influence').scrollIntoView({behavior:'smooth'})">Influence</span>
-  </div>
-  <div class="footer-note">Manuel Professionnel — Version complète</div>
 </footer>
 
-<script>
-/* ---- LEXIQUE ---- */
-const lexique = [
-  {term:"KPI",def:"Key Performance Indicator : indicateur clé de performance permettant de mesurer l'atteinte des objectifs."},
-  {term:"ROI",def:"Retour sur investissement : (Gains – Coûts) / Coûts × 100. Mesure la rentabilité d'une action."},
-  {term:"Branding",def:"Ensemble des actions qui construisent et renforcent l'image d'une marque dans l'esprit du consommateur."},
-  {term:"Positionnement",def:"Image qu'une marque souhaite occuper dans l'esprit de sa cible par rapport à la concurrence."},
-  {term:"Ciblage",def:"Processus de sélection des segments de marché les plus pertinents pour une offre donnée."},
-  {term:"Segmentation",def:"Division d'un marché en groupes homogènes de consommateurs selon des critères communs."},
-  {term:"Benchmark",def:"Analyse comparative des pratiques, performances et offres des concurrents directs et indirects."},
-  {term:"Brief",def:"Document de cadrage remis à une agence listant les objectifs, contraintes et attentes."},
-  {term:"Rétroplanning",def:"Planning à rebours depuis la date cible, structurant toutes les actions et leurs délais."},
-  {term:"Persona",def:"Portrait fictif et détaillé d'un client idéal, utilisé pour guider les décisions marketing et créatives."},
-  {term:"Insight",def:"Vérité profonde et souvent non exprimée sur le comportement ou la motivation d'un consommateur."},
-  {term:"Engagement",def:"Niveau d'interaction d'une audience avec un contenu : likes, commentaires, partages, clics."},
-  {term:"Reach",def:"Nombre de personnes uniques touchées par un message ou une publication."},
-  {term:"Impressions",def:"Nombre de fois qu'un contenu a été affiché, indépendamment du nombre de personnes uniques."},
-  {term:"Conversion",def:"Action souhaitée accomplie par un utilisateur : achat, inscription, téléchargement, appel…"},
-  {term:"Lead",def:"Contact qualifié ayant montré un intérêt pour une offre et pouvant devenir client."},
-  {term:"CRM",def:"Customer Relationship Management : gestion de la relation client via un outil centralisé."},
-  {term:"B2B",def:"Business to Business : relations commerciales entre entreprises."},
-  {term:"B2C",def:"Business to Consumer : relations commerciales entre une entreprise et les consommateurs finaux."},
-  {term:"Sponsoring",def:"Soutien financier ou matériel à un événement en échange d'une visibilité ciblée."},
-  {term:"Partenariat",def:"Accord de collaboration entre deux entités pour atteindre des objectifs mutuellement bénéfiques."},
-  {term:"Activation",def:"Action marketing ponctuelle visant à créer une expérience directe avec la marque."},
-  {term:"Storytelling",def:"Technique narrative qui raconte une histoire pour humaniser une marque et créer de l'émotion."},
-  {term:"Earned Media",def:"Visibilité non payée obtenue grâce à la presse, au bouche-à-oreille ou aux partages."},
-  {term:"Paid Media",def:"Visibilité achetée via la publicité : social ads, display, affichage, TV, radio."},
-  {term:"Owned Media",def:"Supports appartenant à la marque : site web, réseaux sociaux, newsletter, blog."},
-  {term:"SEO",def:"Search Engine Optimization : optimisation pour améliorer le référencement naturel sur les moteurs."},
-  {term:"SEA",def:"Search Engine Advertising : achat de mots-clés sur les moteurs de recherche (ex : Google Ads)."},
-  {term:"Social Ads",def:"Publicités diffusées sur les réseaux sociaux (Meta Ads, TikTok Ads, LinkedIn Ads…)."},
-  {term:"Inbound Marketing",def:"Stratégie d'attraction des clients via du contenu utile, sans démarche publicitaire intrusive."},
-  {term:"Funnel",def:"Entonnoir de conversion représentant le parcours du prospect de la découverte à l'achat."},
-  {term:"Taux de clic",def:"CTR (Click-Through Rate) : % d'utilisateurs ayant cliqué sur un lien ou une publicité."},
-  {term:"CPM",def:"Coût Pour Mille impressions : indicateur du coût d'achat d'un espace publicitaire."},
-  {term:"CPC",def:"Coût Par Clic : montant payé à chaque fois qu'un internaute clique sur une publicité."},
-  {term:"CTA",def:"Call to Action : invitation à accomplir une action précise (Acheter, S'inscrire, En savoir plus…)."},
-  {term:"Brand Content",def:"Contenu de marque à forte valeur ajoutée, éditorial ou créatif, qui ne vend pas directement."},
-  {term:"UGC",def:"User Generated Content : contenu créé par les consommateurs eux-mêmes (photos, avis, vidéos)."},
-  {term:"Micro-influenceur",def:"Créateur avec 10 000 à 100 000 abonnés, fort taux d'engagement et niche thématique précise."},
-  {term:"Macro-influenceur",def:"Créateur avec 100 000 à 1 million d'abonnés, offrant une large portée de communication."},
-  {term:"E-réputation",def:"Image d'une marque ou d'une personne sur internet, construite par l'ensemble des avis et mentions."},
-  {term:"Veille",def:"Surveillance régulière des informations, tendances, concurrents et conversations de son marché."},
-  {term:"SWOT",def:"Matrice d'analyse : Forces, Faiblesses (internes) / Opportunités, Menaces (externes)."},
-  {term:"Expérience client",def:"Ensemble des émotions et perceptions vécues par le client à chaque point de contact avec la marque."},
-  {term:"Parcours client",def:"Séquence complète des interactions d'un client avec une marque, de la découverte à la fidélisation."},
-  {term:"Fidélisation",def:"Ensemble des actions visant à maintenir et renforcer la relation avec les clients existants."},
-  {term:"Notoriété",def:"Degré de connaissance d'une marque par le grand public ou sa cible. Spontanée ou assistée."},
-  {term:"Branding sensoriel",def:"Utilisation des sens (son, odeur, toucher) pour renforcer l'identité et l'expérience de marque."},
-  {term:"Benchmark concurrentiel",def:"Analyse comparative des forces, faiblesses et pratiques des concurrents directs."},
-  {term:"Lancement produit",def:"Mise sur le marché d'un nouveau produit, accompagnée d'un plan de communication dédié."},
-  {term:"NPS",def:"Net Promoter Score : indicateur mesurant la probabilité qu'un client recommande une marque (-100 à +100)."},
-  {term:"Influenceur",def:"Personne ayant une communauté engagée sur les réseaux sociaux et la capacité d'influencer les opinions."},
-];
+<button class="to-top" id="to-top" aria-label="Revenir en haut">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="m6 14 6-6 6 6"/></svg>
+</button>
 
-function buildLexique() {
-  document.getElementById('lexiqueGrid').innerHTML = lexique.map(item => `
-    <div class="lex-item" data-term="${item.term.toLowerCase()}" data-def="${item.def.toLowerCase()}">
-      <div class="lex-term">${item.term}</div>
-      <div class="lex-def">${item.def}</div>
-    </div>`).join('');
-}
-
-function filterLexique(val) {
-  const v = val.toLowerCase();
-  document.querySelectorAll('.lex-item').forEach(el => {
-    el.style.display = (el.dataset.term.includes(v) || el.dataset.def.includes(v)) ? '' : 'none';
-  });
-}
-
-buildLexique();
-
-/* ---- TABS ---- */
-function showTab(btn, id) {
-  const p = btn.closest('.tabs');
-  p.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  p.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(id).classList.add('active');
-}
-
-/* ---- SCROLL TO ---- */
-function scrollTo(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-}
-
-/* ---- ACTIVE SECTION TRACKING ---- */
-const sections = ['marketing','communication','evenementiel','influence','lexique','medias','librairie','quiz'];
-
-function updateActive() {
-  let current = '';
-  const offset = 120;
-
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (window.scrollY + offset >= el.offsetTop) current = id;
-  });
-
-  // Nav links
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.classList.toggle('active', a.dataset.section === current);
-  });
-
-  // Progress rail
-  document.querySelectorAll('.progress-segment').forEach(s => {
-    s.classList.toggle('active', s.dataset.seg === current);
-  });
-
-  // Pill dots
-  document.querySelectorAll('.pill-dot').forEach(d => {
-    d.classList.toggle('active', d.dataset.pill === current);
-  });
-}
-
-window.addEventListener('scroll', updateActive, { passive: true });
-updateActive();
-
-/* ---- REVEAL ---- */
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(r => revObs.observe(r));
-
-/* ---- BARRE DE PROGRESSION ---- */
-const rp = document.getElementById('read-progress');
-window.addEventListener('scroll', () => {
-  const h = document.documentElement.scrollHeight - window.innerHeight;
-  rp.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-}, { passive: true });
-
-/* ---- CURSEUR PERSONNALISÉ ---- */
-(function() {
-  const dot  = document.getElementById('cur-dot');
-  const ring = document.getElementById('cur-ring');
-  if (!dot || !ring) return;
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(loop);
-  })();
-  document.addEventListener('mousedown', () => ring.classList.add('small'));
-  document.addEventListener('mouseup',   () => ring.classList.remove('small'));
-  document.querySelectorAll('a,button,[onclick],.module-card,.card,.lib-card,.media-card').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('big'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('big'));
-  });
-})();
-
-/* ---- PARALLAXE HERO ---- */
-const heroBg = document.querySelector('.hero-bg');
-const heroH1 = document.querySelector('.hero h1');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (heroBg) heroBg.style.transform = 'translateY(' + (y * 0.38) + 'px)';
-  if (heroH1) heroH1.style.transform = 'translateY(' + (y * 0.14) + 'px)';
-}, { passive: true });
-
-/* ---- COMPTEURS ANIMÉS ---- */
-const cntObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    const target = parseInt(el.dataset.to);
-    const suf    = el.dataset.suf || '';
-    const t0 = performance.now();
-    const dur = 1600;
-    (function tick(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 4);
-      el.textContent = Math.round(ease * target) + suf;
-      if (p < 1) requestAnimationFrame(tick);
-    })(t0);
-    cntObs.unobserve(el);
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('.stat-num[data-to]').forEach(el => cntObs.observe(el));
-
-/* ---- LIBRAIRIE FILTER ---- */
-function filterLib(btn, cat) {
-  document.querySelectorAll('.lib-filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.lib-card').forEach(card => {
-    card.style.display = (cat === 'tous' || card.dataset.cat.includes(cat)) ? '' : 'none';
-  });
-}
-
-/* ---- QUIZ ---- */
-const quizData = [
-  {q:"Qu'est-ce que le positionnement d'une marque ?",opts:["La place en rayon","L'image ancrée dans l'esprit du consommateur face à la concurrence","Le budget pub","Le nombre de références"],ans:1,exp:"Le positionnement est l'image distinctive qu'une marque veut occuper dans l'esprit de sa cible par rapport à ses concurrents (Ries & Trout)."},
-  {q:"Que signifie KPI ?",opts:["Key Product Index","Key Performance Indicator","Key Pricing Input","Knowledge & Practice Insight"],ans:1,exp:"KPI = Key Performance Indicator : indicateur clé qui mesure l'atteinte d'un objectif (ex : taux de conversion, reach, NPS)."},
-  {q:"Quelle loi encadre la pub des influenceurs en France depuis 2023 ?",opts:["La loi Sapin II","La loi du 9 juin 2023","Le RGPD","La loi Évin"],ans:1,exp:"La loi du 9 juin 2023 oblige tout créateur rémunéré à mentionner clairement « Publicité » ou « Collaboration commerciale »."},
-  {q:"Dans le mix 4P, que représente « Place » ?",opts:["Le lieu de l'événement","La pub réseaux","La distribution et les canaux de vente","Le positionnement géographique"],ans:2,exp:"Place désigne la distribution : les canaux par lesquels le produit est mis à disposition du consommateur."},
-  {q:"Qu'est-ce que l'Earned Media ?",opts:["Visibilité achetée","Visibilité gratuite via RP, partages et bouche-à-oreille","Supports appartenant à la marque","Budget TV"],ans:1,exp:"L'Earned Media est la visibilité non payée : articles de presse, partages, avis clients. Plus crédible car non contrôlée directement par la marque."},
-  {q:"À quel stade du rétroplanning se situe la réservation du lieu ?",opts:["J-7","Jour J","J-90","J-30"],ans:2,exp:"À J-90 : conception et cadrage — validation du concept, réservation du lieu, budget, brief prestataires."},
-  {q:"Que signifie SWOT ?",opts:["Forces, Faiblesses, Opportunités, Menaces","Segmentation, Worflow, Objectifs, Tendances","Stratégie, Webmarketing, Offre, Territoire","Aucune de ces réponses"],ans:0,exp:"SWOT = Strengths (Forces), Weaknesses (Faiblesses) internes + Opportunities (Opportunités), Threats (Menaces) externes."},
-  {q:"Qu'est-ce qu'un micro-influenceur ?",opts:["Contenu < 30 secondes","1 000 à 10 000 abonnés","10 000 à 100 000 abonnés, fort engagement","Travaille uniquement avec micro-marques"],ans:2,exp:"Le micro-influenceur cumule 10 000 à 100 000 abonnés. Fort taux d'engagement et spécialisation thématique précise."},
-  {q:"Que mesure le NPS ?",opts:["Nouveaux abonnés réseaux","Rentabilité d'une campagne","Probabilité qu'un client recommande la marque","Coût d'acquisition client"],ans:2,exp:"NPS = Net Promoter Score : probabilité de recommandation sur une échelle -100 à +100."},
-  {q:"Qu'est-ce que l'Inbound Marketing ?",opts:["Envoi massif d'e-mails","Attirer les clients via du contenu utile, sans pub intrusive","Achat de mots-clés","Pub TV nationale"],ans:1,exp:"L'Inbound Marketing crée du contenu de valeur pour attirer naturellement les prospects — à l'opposé de l'Outbound qui interrompt."},
-  {q:"En gestion de crise, quelle est la première règle ?",opts:["Ne rien dire et attendre","Répondre rapidement avant que la rumeur s'emballe","Supprimer les commentaires","Publier un communiqué 72h après"],ans:1,exp:"La réactivité est primordiale : plus la réponse tarde, plus les rumeurs se propagent. Transparence et empathie doivent l'accompagner."},
-  {q:"Qu'est-ce que le Storytelling en marketing ?",opts:["Rédaction de rapports annuels","Technique narrative pour humaniser la marque et créer de l'émotion","Référencement naturel","Analyse de données comportementales"],ans:1,exp:"Le Storytelling crée un lien émotionnel entre la marque et sa cible en racontant une histoire mémorable."},
-  {q:"Différence entre Reach et Impressions ?",opts:["Synonymes","Reach = personnes uniques ; Impressions = total des affichages","Reach = réseaux payants ; Impressions = SEO","Impressions en euros, Reach en personnes"],ans:1,exp:"Reach = personnes uniques touchées. Impressions = nombre total d'affichages (un même individu peut générer plusieurs impressions)."},
-  {q:"Qu'est-ce qu'un persona ?",opts:["Le logo de la marque","Segment démographique générique","Portrait fictif et détaillé du client idéal","Le responsable marketing concurrent"],ans:2,exp:"Le persona est un profil semi-fictif du client idéal : prénom, âge, job, motivations, freins. Il guide toutes les décisions marketing."},
-  {q:"Quel indicateur mesure la rentabilité d'une action marketing ?",opts:["CPM","CTR","ROI","CPC"],ans:2,exp:"ROI = (Gains – Coûts) / Coûts × 100. Mesure ce que rapporte un investissement. Un ROI positif = action rentable."},
-];
-
-let qCur = 0, qScore = 0;
-
-function buildQuiz() {
-  document.getElementById('quizQuestions').innerHTML = quizData.map((q,i) => `
-    <div class="quiz-question ${i===0?'active':''}" id="qq${i}">
-      <div class="quiz-q-num">Question ${i+1} / ${quizData.length}</div>
-      <div class="quiz-q-text">${q.q}</div>
-      <div class="quiz-options">${q.opts.map((o,j)=>`<button class="quiz-opt" onclick="answerQ(${i},${j})">${o}</button>`).join('')}</div>
-      <div class="quiz-feedback" id="qf${i}"></div>
-      <div class="quiz-nav">
-        <button class="quiz-btn" onclick="prevQ()" ${i===0?'disabled':''} id="qprev${i}">← Précédent</button>
-        <button class="quiz-btn primary" onclick="nextQ()" disabled id="qnext${i}">${i===quizData.length-1?'Voir le score →':'Suivant →'}</button>
-      </div>
-    </div>`).join('');
-  updateQuizProg();
-}
-
-function answerQ(qi, chosen) {
-  const q = quizData[qi];
-  document.querySelectorAll(`#qq${qi} .quiz-opt`).forEach(o => o.disabled = true);
-  document.querySelectorAll(`#qq${qi} .quiz-opt`)[chosen].classList.add(chosen===q.ans?'correct':'wrong');
-  document.querySelectorAll(`#qq${qi} .quiz-opt`)[q.ans].classList.add('correct');
-  if (chosen === q.ans) qScore++;
-  document.getElementById('qf'+qi).textContent = q.exp;
-  document.getElementById('qnext'+qi).disabled = false;
-}
-
-function nextQ() {
-  if (qCur < quizData.length-1) {
-    document.getElementById('qq'+qCur).classList.remove('active');
-    qCur++;
-    document.getElementById('qq'+qCur).classList.add('active');
-    updateQuizProg();
-  } else { showScore(); }
-}
-
-function prevQ() {
-  if (qCur > 0) {
-    document.getElementById('qq'+qCur).classList.remove('active');
-    qCur--;
-    document.getElementById('qq'+qCur).classList.add('active');
-    updateQuizProg();
-  }
-}
-
-function updateQuizProg() {
-  document.getElementById('quizFill').style.width = (qCur/quizData.length*100)+'%';
-}
-
-function showScore() {
-  document.getElementById('quizQuestions').style.display = 'none';
-  document.getElementById('quizScore').classList.add('visible');
-  document.getElementById('scoreBig').textContent = qScore+' / '+quizData.length;
-  document.getElementById('quizFill').style.width = '100%';
-  const p = Math.round(qScore/quizData.length*100);
-  document.getElementById('scoreMsg').textContent = p>=90?'Excellente maîtrise — expert confirmé !':p>=70?'Très bon niveau — quelques points à consolider.':p>=50?'Niveau intermédiaire — révisez les modules clés.':'À approfondir — parcourez les modules avec attention.';
-}
-
-function restartQuiz() {
-  qCur = 0; qScore = 0;
-  document.getElementById('quizScore').classList.remove('visible');
-  document.getElementById('quizQuestions').style.display = '';
-  buildQuiz();
-}
-
-buildQuiz();
-
-
-</script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+# Artefacts locaux ostack / browse
+.ostack/
+
+# Système
+Thumbs.db
+desktop.ini
+.DS_Store
