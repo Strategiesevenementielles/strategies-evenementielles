@@ -92,20 +92,28 @@
     headings.forEach(function (h) { tocObs.observe(h); });
   }
 
-  /* ---- FORMULAIRES DE DÉMO (sans backend) ---- */
-  document.querySelectorAll('form[data-demo]').forEach(function (form) {
+  /* ---- FORMULAIRES NETLIFY (soumission AJAX : reste sur la page + message de succès) ---- */
+  document.querySelectorAll('form[data-netlify]').forEach(function (form) {
     var successId = form.getAttribute('data-success');
     var success = successId ? document.getElementById(successId) : form.querySelector('.form-success');
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      if (success) success.classList.add('show');
       var submit = form.querySelector('button[type=submit]');
-      if (submit) {
-        var done = form.getAttribute('data-done') || 'Envoyé ✓';
-        submit.textContent = done;
-      }
-      form.querySelectorAll('input, textarea, select, button').forEach(function (el) { el.disabled = true; });
+      if (submit) submit.disabled = true;
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        if (success) success.classList.add('show');
+        if (submit) submit.textContent = form.getAttribute('data-done') || 'Envoyé ✓';
+        form.querySelectorAll('input, textarea, select, button').forEach(function (el) { el.disabled = true; });
+      }).catch(function () {
+        // Repli : laisse le navigateur poster nativement vers l'action (Netlify capte puis redirige vers /merci.html)
+        form.submit();
+      });
     });
   });
 

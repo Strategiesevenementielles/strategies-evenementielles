@@ -169,11 +169,13 @@
             <li>Vos suggestions orientent les prochains contenus</li>
             <li>Aucune donnée revendue à des tiers</li>
           </ul>
-          <p class="contact-direct">Ou écrivez-nous directement :<br><a href="mailto:contact@academie-marketing.fr">contact@academie-marketing.fr</a></p>
+          <p class="contact-direct">Ou écrivez-nous directement :<br><a href="mailto:agencygoldensocial@gmail.com">agencygoldensocial@gmail.com</a></p>
         </div>
 
         <div class="reveal">
-          <form id="contact-form" data-demo data-done="Message envoyé ✓" data-success="contact-success" novalidate>
+          <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/merci.html" data-done="Message envoyé ✓" data-success="contact-success" novalidate>
+            <input type="hidden" name="form-name" value="contact">
+            <p hidden aria-hidden="true"><label>Laissez ce champ vide : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <div class="form-row">
               <div class="form-field">
                 <label class="form-label" for="c-nom">Nom &amp; prénom</label>

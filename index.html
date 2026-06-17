@@ -52,7 +52,7 @@
       "name": "Académie Marketing",
       "url": "https://academie-marketing.fr/",
       "description": "Plateforme pédagogique gratuite qui aide les étudiants en marketing à comprendre, réviser et réussir : cours structurés, lexique, quiz corrigés et bibliographie commentée.",
-      "email": "contact@academie-marketing.fr",
+      "email": "agencygoldensocial@gmail.com",
       "areaServed": { "@type": "Country", "name": "France" }
     },
     {
@@ -399,7 +399,9 @@
         <span class="eyebrow is-bleu is-centered">La notion de la semaine</span>
         <h2 id="news-title">Un concept marketing clé, <em>chaque semaine</em></h2>
         <p>Recevez une notion expliquée simplement, un exemple et un mini-exercice. Parfait pour réviser sans y penser. Pas de spam, désabonnement en un clic.</p>
-        <form class="newsletter-form" data-demo data-done="Inscrit ✓" data-success="news-success" novalidate>
+        <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/merci.html" data-done="Inscrit ✓" data-success="news-success" novalidate>
+          <input type="hidden" name="form-name" value="newsletter">
+          <p hidden aria-hidden="true"><label>Laissez ce champ vide : <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
           <input type="email" name="email" required placeholder="vous@exemple.com" aria-label="Votre adresse e-mail">
           <button class="btn btn-primary" type="submit">S'inscrire</button>
         </form>
