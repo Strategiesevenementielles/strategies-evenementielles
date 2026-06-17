@@ -248,7 +248,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
 .nav-links a {
   display: inline-flex; align-items: center; padding: 0.5rem 0.95rem;
   font-size: 0.7rem; font-weight: 400; letter-spacing: var(--ls-label); text-transform: uppercase;
-  color: var(--clair-45); border-bottom: 2px solid transparent;
+  color: var(--clair-70); border-bottom: 2px solid transparent;
   transition: color .3s ease, border-color .3s ease;
 }
 .nav-links a:hover { color: var(--clair-100); }
@@ -294,6 +294,9 @@ section[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
 .on-paper .btn-secondary:hover { border-color: var(--bordeaux-500); background: rgba(122,21,48,0.05); color: var(--bordeaux-700); }
 .btn-link { background: transparent; color: var(--bleu-500); border-color: var(--bleu-500); }
 .btn-link:hover { background: var(--bleu-500); color: var(--papier-0); }
+/* Sur fond sombre, le bleu moyen manque de contraste : on éclaircit le texte + la bordure */
+.on-dark .btn-link { color: var(--bleu-300); border-color: var(--bleu-300); }
+.on-dark .btn-link:hover { background: var(--bleu-300); border-color: var(--bleu-300); color: var(--vert-900); }
 .btn-ghost { padding-inline: 0; border: none; color: var(--dore-500); }
 .btn-ghost:hover { color: var(--dore-300); transform: none; }
 .btn .arrow { transition: transform .3s ease; }
